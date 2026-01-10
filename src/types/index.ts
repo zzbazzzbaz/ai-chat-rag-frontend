@@ -63,6 +63,7 @@ export interface KnowledgeFile {
   created_at: string
   processed_at?: string | null
   chunk_count?: number
+  file_url?: string
 }
 
 // 系统配置

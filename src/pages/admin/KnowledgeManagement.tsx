@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { adminKnowledgeApi } from '@/api'
 import type { KnowledgeFile, PaginatedResponse } from '@/types'
-import { Search, Upload, Trash2, RefreshCw, Eye, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Search, Upload, Trash2, RefreshCw, Eye, ChevronLeft, ChevronRight, Download } from 'lucide-react'
 
 const statusMap: Record<string, { label: string; className: string }> = {
   processing: { label: '处理中', className: 'bg-yellow-100 text-yellow-700' },
@@ -200,11 +200,15 @@ export default function KnowledgeManagement() {
                             <Button size="sm" variant="outline" onClick={() => handleViewDetail(file.id)} title="查看详情">
                               <Eye className="h-4 w-4" />
                             </Button>
-                            {file.status === 'failed' && (
-                              <Button size="sm" variant="outline" onClick={() => handleReprocess(file.id)} title="重新处理">
-                                <RefreshCw className="h-4 w-4" />
-                              </Button>
-                            )}
+                            <Button 
+                              size="sm" 
+                              variant="outline" 
+                              onClick={() => handleReprocess(file.id)} 
+                              title="重新解析"
+                              disabled={file.status === 'processing'}
+                            >
+                              <RefreshCw className="h-4 w-4" />
+                            </Button>
                             <Button size="sm" variant="outline" onClick={() => handleDelete(file.id)} title="删除">
                               <Trash2 className="h-4 w-4 text-red-500" />
                             </Button>
@@ -258,8 +262,16 @@ export default function KnowledgeManagement() {
               {detailModal.file.chunk_count !== undefined && (
                 <div><span className="text-muted-foreground">分块数量：</span>{detailModal.file.chunk_count}</div>
               )}
-              <div className="pt-4">
-                <Button variant="outline" onClick={() => setDetailModal({ open: false, file: null })} className="w-full">
+              <div className="pt-4 flex gap-2">
+                <Button 
+                  variant="outline" 
+                  onClick={() => adminKnowledgeApi.download(detailModal.file!.id, detailModal.file!.filename)}
+                  className="flex-1"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  下载文件
+                </Button>
+                <Button variant="outline" onClick={() => setDetailModal({ open: false, file: null })} className="flex-1">
                   关闭
                 </Button>
               </div>

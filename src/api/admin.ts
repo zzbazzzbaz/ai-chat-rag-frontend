@@ -54,6 +54,22 @@ export const adminKnowledgeApi = {
   // 重新处理文件
   reprocess: (id: number) =>
     request.post<unknown, { id: number; status: string }>(`/admin/knowledge/${id}/reprocess`),
+
+  // 下载文件
+  download: async (id: number, filename: string) => {
+    const token = localStorage.getItem('token')
+    const response = await fetch(`/api/v1/admin/knowledge/${id}/download`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    if (!response.ok) throw new Error('下载失败')
+    const blob = await response.blob()
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = filename
+    a.click()
+    URL.revokeObjectURL(url)
+  },
 }
 
 // 对话管理接口
@@ -82,11 +98,11 @@ export const adminConfigApi = {
     request.put('/admin/config', config),
 
   // 测试 LLM 配置
-  testLlmConfig: (config: { api_key: string; model_name?: string; model_url?: string }) =>
-    request.post<unknown, ConfigTestResult>('/admin/config/test', config),
+  testLlmConfig: (config: { api_key: string; model_name: string; base_url: string }) =>
+    request.post<unknown, ConfigTestResult>('/admin/config/test-llm', config),
 
   // 测试 Embedding 配置
-  testEmbeddingConfig: (config: { api_key: string; model_name?: string; model_url?: string }) =>
+  testEmbeddingConfig: (config: { api_key: string; model_name: string; base_url: string }) =>
     request.post<unknown, ConfigTestResult>('/admin/config/test-embedding', config),
 }
 

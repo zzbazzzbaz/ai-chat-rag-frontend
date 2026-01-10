@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { adminConfigApi } from '@/api'
 import type { SystemConfig } from '@/types'
-import { Save, TestTube, Loader2 } from 'lucide-react'
+import { Save, TestTube, Loader2, Eye, EyeOff } from 'lucide-react'
 
 export default function SystemSettings() {
   const [config, setConfig] = useState<SystemConfig>({
@@ -22,6 +22,8 @@ export default function SystemSettings() {
   const [testingEmbedding, setTestingEmbedding] = useState(false)
   const [llmTestResult, setLlmTestResult] = useState<{ success: boolean; message: string } | null>(null)
   const [embeddingTestResult, setEmbeddingTestResult] = useState<{ success: boolean; message: string } | null>(null)
+  const [showLlmKey, setShowLlmKey] = useState(false)
+  const [showEmbeddingKey, setShowEmbeddingKey] = useState(false)
 
   useEffect(() => {
     fetchConfig()
@@ -59,7 +61,7 @@ export default function SystemSettings() {
       const result = await adminConfigApi.testLlmConfig({
         api_key: config.llm_api_key,
         model_name: config.llm_model_name,
-        model_url: config.llm_api_url,
+        base_url: config.llm_api_url,
       })
       setLlmTestResult({
         success: result.success,
@@ -82,7 +84,7 @@ export default function SystemSettings() {
       const result = await adminConfigApi.testEmbeddingConfig({
         api_key: config.embedding_api_key,
         model_name: config.embedding_model_name,
-        model_url: config.embedding_api_url,
+        base_url: config.embedding_api_url,
       })
       setEmbeddingTestResult({
         success: result.success,
@@ -126,12 +128,23 @@ export default function SystemSettings() {
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">API Key</label>
-              <Input
-                type="password"
-                value={config.llm_api_key}
-                onChange={(e) => setConfig({ ...config, llm_api_key: e.target.value })}
-                placeholder="sk-xxxx"
-              />
+              <div className="flex gap-2">
+                <Input
+                  type={showLlmKey ? 'text' : 'password'}
+                  value={config.llm_api_key}
+                  onChange={(e) => setConfig({ ...config, llm_api_key: e.target.value })}
+                  placeholder="sk-xxxx"
+                  autoComplete="off"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setShowLlmKey(!showLlmKey)}
+                >
+                  {showLlmKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </Button>
+              </div>
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">模型名称</label>
@@ -170,12 +183,23 @@ export default function SystemSettings() {
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">API Key</label>
-              <Input
-                type="password"
-                value={config.embedding_api_key}
-                onChange={(e) => setConfig({ ...config, embedding_api_key: e.target.value })}
-                placeholder="sk-xxxx"
-              />
+              <div className="flex gap-2">
+                <Input
+                  type={showEmbeddingKey ? 'text' : 'password'}
+                  value={config.embedding_api_key}
+                  onChange={(e) => setConfig({ ...config, embedding_api_key: e.target.value })}
+                  placeholder="sk-xxxx"
+                  autoComplete="off"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setShowEmbeddingKey(!showEmbeddingKey)}
+                >
+                  {showEmbeddingKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </Button>
+              </div>
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">模型名称</label>

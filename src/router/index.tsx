@@ -26,6 +26,14 @@ function SuspenseWrapper({ children }: { children: React.ReactNode }) {
 // 需要登录的路由守卫
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
+  const initialized = useAuthStore((s) => s.initialized)
+  const user = useAuthStore((s) => s.user)
+  
+  // 未初始化时，如果有本地缓存的用户信息则继续渲染，否则显示 loading
+  if (!initialized && !user) {
+    return <div className="flex h-screen items-center justify-center"><Loading size="lg" /></div>
+  }
+  
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />
   }
@@ -36,6 +44,12 @@ function RequireAuth({ children }: { children: React.ReactNode }) {
 function RequireAdmin({ children }: { children: React.ReactNode }) {
   const user = useAuthStore((s) => s.user)
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
+  const initialized = useAuthStore((s) => s.initialized)
+  
+  // 未初始化时，如果有本地缓存的用户信息则继续渲染，否则显示 loading
+  if (!initialized && !user) {
+    return <div className="flex h-screen items-center justify-center"><Loading size="lg" /></div>
+  }
   
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />
