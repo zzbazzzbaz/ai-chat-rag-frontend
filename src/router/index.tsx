@@ -13,6 +13,7 @@ const Dashboard = lazy(() => import('@/pages/admin/Dashboard'))
 const UserManagement = lazy(() => import('@/pages/admin/UserManagement'))
 const KnowledgeManagement = lazy(() => import('@/pages/admin/KnowledgeManagement'))
 const ConversationManagement = lazy(() => import('@/pages/admin/ConversationManagement'))
+const RecommendedQuestions = lazy(() => import('@/pages/admin/RecommendedQuestions'))
 const SystemSettings = lazy(() => import('@/pages/admin/SystemSettings'))
 
 function SuspenseWrapper({ children }: { children: React.ReactNode }) {
@@ -96,6 +97,7 @@ export const router = createBrowserRouter([
       { path: 'users', element: <SuspenseWrapper><UserManagement /></SuspenseWrapper> },
       { path: 'knowledge', element: <SuspenseWrapper><KnowledgeManagement /></SuspenseWrapper> },
       { path: 'conversations', element: <SuspenseWrapper><ConversationManagement /></SuspenseWrapper> },
+      { path: 'questions', element: <SuspenseWrapper><RecommendedQuestions /></SuspenseWrapper> },
       { path: 'settings', element: <SuspenseWrapper><SystemSettings /></SuspenseWrapper> },
     ],
   },

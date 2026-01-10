@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { adminConfigApi } from '@/api'
 import type { SystemConfig } from '@/types'
-import { Save, TestTube, Loader2, Eye, EyeOff } from 'lucide-react'
+import { Save, TestTube, Loader2, Cpu, MessageSquare, CheckCircle, XCircle, Sparkles } from 'lucide-react'
 
 export default function SystemSettings() {
   const [config, setConfig] = useState<SystemConfig>({
@@ -22,8 +19,6 @@ export default function SystemSettings() {
   const [testingEmbedding, setTestingEmbedding] = useState(false)
   const [llmTestResult, setLlmTestResult] = useState<{ success: boolean; message: string } | null>(null)
   const [embeddingTestResult, setEmbeddingTestResult] = useState<{ success: boolean; message: string } | null>(null)
-  const [showLlmKey, setShowLlmKey] = useState(false)
-  const [showEmbeddingKey, setShowEmbeddingKey] = useState(false)
 
   useEffect(() => {
     fetchConfig()
@@ -59,9 +54,9 @@ export default function SystemSettings() {
     setLlmTestResult(null)
     try {
       const result = await adminConfigApi.testLlmConfig({
+        base_url: config.llm_api_url,
         api_key: config.llm_api_key,
         model_name: config.llm_model_name,
-        base_url: config.llm_api_url,
       })
       setLlmTestResult({
         success: result.success,
@@ -82,9 +77,9 @@ export default function SystemSettings() {
     setEmbeddingTestResult(null)
     try {
       const result = await adminConfigApi.testEmbeddingConfig({
+        base_url: config.embedding_api_url,
         api_key: config.embedding_api_key,
         model_name: config.embedding_model_name,
-        base_url: config.embedding_api_url,
       })
       setEmbeddingTestResult({
         success: result.success,
@@ -103,146 +98,161 @@ export default function SystemSettings() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-500 mx-auto mb-2" />
+          <p className="text-slate-500">加载配置中...</p>
+        </div>
       </div>
     )
   }
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">系统设置</h1>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold text-slate-800">系统设置</h1>
+        <p className="text-slate-500 mt-1">配置 AI 模型和系统参数</p>
+      </div>
       
-      <div className="space-y-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>LLM 模型配置</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* LLM 模型配置 */}
+        <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg shadow-blue-100/30 overflow-hidden">
+          <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/50">
+            <h3 className="font-semibold text-slate-800 flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center">
+                <Cpu className="h-4 w-4 text-white" />
+              </div>
+              对话模型配置
+            </h3>
+          </div>
+          <div className="p-6 space-y-5">
             <div>
-              <label className="block text-sm font-medium mb-2">接口地址</label>
-              <Input
+              <label className="block text-sm font-medium text-slate-700 mb-2">接口地址</label>
+              <input
                 value={config.llm_api_url}
                 onChange={(e) => setConfig({ ...config, llm_api_url: e.target.value })}
                 placeholder="https://dashscope.aliyuncs.com/compatible-mode/v1"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">API Key</label>
-              <div className="flex gap-2">
-                <Input
-                  type={showLlmKey ? 'text' : 'password'}
-                  value={config.llm_api_key}
-                  onChange={(e) => setConfig({ ...config, llm_api_key: e.target.value })}
-                  placeholder="sk-xxxx"
-                  autoComplete="off"
-                />
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon"
-                  onClick={() => setShowLlmKey(!showLlmKey)}
-                >
-                  {showLlmKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                </Button>
-              </div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">API Key</label>
+              <input
+                type="password"
+                value={config.llm_api_key}
+                onChange={(e) => setConfig({ ...config, llm_api_key: e.target.value })}
+                placeholder="sk-xxxx"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+              />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">模型名称</label>
-              <Input
+              <label className="block text-sm font-medium text-slate-700 mb-2">模型名称</label>
+              <input
                 value={config.llm_model_name}
                 onChange={(e) => setConfig({ ...config, llm_model_name: e.target.value })}
                 placeholder="qwen-plus"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
               />
             </div>
-            <div className="flex gap-2">
-              <Button onClick={handleTestLlm} variant="outline" disabled={testingLlm}>
-                {testingLlm ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <TestTube className="h-4 w-4 mr-2" />}
+            <div className="flex items-center gap-3 pt-2">
+              <button onClick={handleTestLlm} disabled={testingLlm}
+                className="flex items-center gap-2 px-4 py-2.5 border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 transition-colors disabled:opacity-50">
+                {testingLlm ? <Loader2 className="h-4 w-4 animate-spin" /> : <TestTube className="h-4 w-4" />}
                 测试连接
-              </Button>
+              </button>
               {llmTestResult && (
-                <span className={`text-sm py-2 ${llmTestResult.success ? 'text-green-600' : 'text-red-600'}`}>
+                <div className={`flex items-center gap-2 text-sm ${llmTestResult.success ? 'text-emerald-600' : 'text-red-600'}`}>
+                  {llmTestResult.success ? <CheckCircle className="h-4 w-4" /> : <XCircle className="h-4 w-4" />}
                   {llmTestResult.message}
-                </span>
+                </div>
               )}
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Embedding 模型配置</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
+        {/* Embedding 模型配置 */}
+        <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg shadow-blue-100/30 overflow-hidden">
+          <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/50">
+            <h3 className="font-semibold text-slate-800 flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center">
+                <Sparkles className="h-4 w-4 text-white" />
+              </div>
+              嵌入模型配置
+            </h3>
+          </div>
+          <div className="p-6 space-y-5">
             <div>
-              <label className="block text-sm font-medium mb-2">接口地址</label>
-              <Input
+              <label className="block text-sm font-medium text-slate-700 mb-2">接口地址</label>
+              <input
                 value={config.embedding_api_url}
                 onChange={(e) => setConfig({ ...config, embedding_api_url: e.target.value })}
                 placeholder="https://dashscope.aliyuncs.com/compatible-mode/v1"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">API Key</label>
-              <div className="flex gap-2">
-                <Input
-                  type={showEmbeddingKey ? 'text' : 'password'}
-                  value={config.embedding_api_key}
-                  onChange={(e) => setConfig({ ...config, embedding_api_key: e.target.value })}
-                  placeholder="sk-xxxx"
-                  autoComplete="off"
-                />
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon"
-                  onClick={() => setShowEmbeddingKey(!showEmbeddingKey)}
-                >
-                  {showEmbeddingKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                </Button>
-              </div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">API Key</label>
+              <input
+                type="password"
+                value={config.embedding_api_key}
+                onChange={(e) => setConfig({ ...config, embedding_api_key: e.target.value })}
+                placeholder="sk-xxxx"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+              />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">模型名称</label>
-              <Input
+              <label className="block text-sm font-medium text-slate-700 mb-2">模型名称</label>
+              <input
                 value={config.embedding_model_name}
                 onChange={(e) => setConfig({ ...config, embedding_model_name: e.target.value })}
-                placeholder="text-embedding-v4"
+                placeholder="text-embedding-v3"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
               />
             </div>
-            <div className="flex gap-2">
-              <Button onClick={handleTestEmbedding} variant="outline" disabled={testingEmbedding}>
-                {testingEmbedding ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <TestTube className="h-4 w-4 mr-2" />}
+            <div className="flex items-center gap-3 pt-2">
+              <button onClick={handleTestEmbedding} disabled={testingEmbedding}
+                className="flex items-center gap-2 px-4 py-2.5 border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 transition-colors disabled:opacity-50">
+                {testingEmbedding ? <Loader2 className="h-4 w-4 animate-spin" /> : <TestTube className="h-4 w-4" />}
                 测试连接
-              </Button>
+              </button>
               {embeddingTestResult && (
-                <span className={`text-sm py-2 ${embeddingTestResult.success ? 'text-green-600' : 'text-red-600'}`}>
+                <div className={`flex items-center gap-2 text-sm ${embeddingTestResult.success ? 'text-emerald-600' : 'text-red-600'}`}>
+                  {embeddingTestResult.success ? <CheckCircle className="h-4 w-4" /> : <XCircle className="h-4 w-4" />}
                   {embeddingTestResult.message}
-                </span>
+                </div>
               )}
             </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>系统提示词</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <textarea
-              value={config.system_prompt}
-              onChange={(e) => setConfig({ ...config, system_prompt: e.target.value })}
-              placeholder="你是一个专业的知识库问答助手..."
-              className="w-full h-48 px-3 py-2 border rounded-md text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-          </CardContent>
-        </Card>
-
-        <div className="flex justify-end">
-          <Button onClick={handleSave} disabled={saving}>
-            {saving ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Save className="h-4 w-4 mr-2" />}
-            保存配置
-          </Button>
+          </div>
         </div>
+      </div>
+
+      {/* 系统提示词 */}
+      <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg shadow-blue-100/30 overflow-hidden">
+        <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/50">
+          <h3 className="font-semibold text-slate-800 flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center">
+              <MessageSquare className="h-4 w-4 text-white" />
+            </div>
+            系统提示词
+          </h3>
+        </div>
+        <div className="p-6">
+          <textarea
+            value={config.system_prompt}
+            onChange={(e) => setConfig({ ...config, system_prompt: e.target.value })}
+            placeholder="你是一个专业的航天知识助手..."
+            className="w-full h-40 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 resize-none focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+          />
+          <p className="text-xs text-slate-400 mt-2">设置 AI 助手的角色和行为规范</p>
+        </div>
+      </div>
+
+      {/* 保存按钮 */}
+      <div className="flex justify-end">
+        <button onClick={handleSave} disabled={saving}
+          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-400 to-blue-500 text-white rounded-xl hover:from-sky-500 hover:to-blue-600 transition-all shadow-lg shadow-blue-200/50 disabled:opacity-50">
+          {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+          保存配置
+        </button>
       </div>
     </div>
   )

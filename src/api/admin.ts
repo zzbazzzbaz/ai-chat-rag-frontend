@@ -132,3 +132,24 @@ export const adminDashboardApi = {
     }
   },
 }
+
+// 推荐问题管理接口
+import type { RecommendedQuestionAdmin } from '@/types'
+
+export const adminRecommendedQuestionApi = {
+  // 获取所有推荐问题
+  getList: () =>
+    request.get<unknown, RecommendedQuestionAdmin[]>('/admin/recommended-questions'),
+
+  // 添加推荐问题
+  create: (data: { content: string; is_active?: boolean }) =>
+    request.post<unknown, RecommendedQuestionAdmin>('/admin/recommended-questions', data),
+
+  // 更新推荐问题
+  update: (id: number, data: { content?: string; is_active?: boolean }) =>
+    request.put(`/admin/recommended-questions/${id}`, data),
+
+  // 删除推荐问题
+  delete: (id: number) =>
+    request.delete(`/admin/recommended-questions/${id}`),
+}

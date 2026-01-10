@@ -133,3 +133,18 @@ export interface UserStats {
   message_count: number
   token_count: number
 }
+
+// 推荐问题（前台）
+export interface RecommendedQuestion {
+  id: number
+  content: string
+}
+
+// 推荐问题（管理端）
+export interface RecommendedQuestionAdmin {
+  id: number
+  content: string
+  is_active: boolean
+  created_at: string
+  updated_at: string
+}

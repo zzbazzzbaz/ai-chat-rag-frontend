@@ -1,5 +1,5 @@
 export { authApi } from './auth'
 export { chatApi, streamChat } from './chat'
 export { userApi } from './user'
-export { adminUserApi, adminKnowledgeApi, adminConversationApi, adminConfigApi, adminDashboardApi } from './admin'
+export { adminUserApi, adminKnowledgeApi, adminConversationApi, adminConfigApi, adminDashboardApi, adminRecommendedQuestionApi } from './admin'
 export { default as request } from './request'

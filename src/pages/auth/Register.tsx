@@ -1,11 +1,42 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/stores'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { toast } from '@/components/common'
-import { MessageSquare } from 'lucide-react'
+import { Rocket } from 'lucide-react'
+
+// 星星组件
+function Stars() {
+  const [stars, setStars] = useState<{ id: number; x: number; y: number; size: number; delay: number }[]>([])
+  
+  useEffect(() => {
+    const newStars = Array.from({ length: 40 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 3 + 2,
+      delay: Math.random() * 3,
+    }))
+    setStars(newStars)
+  }, [])
+
+  return (
+    <div className="absolute inset-0 overflow-hidden">
+      {stars.map((star) => (
+        <div
+          key={star.id}
+          className="absolute rounded-full bg-blue-400/40 animate-twinkle"
+          style={{
+            left: `${star.x}%`,
+            top: `${star.y}%`,
+            width: `${star.size}px`,
+            height: `${star.size}px`,
+            animationDelay: `${star.delay}s`,
+          }}
+        />
+      ))}
+    </div>
+  )
+}
 
 export default function Register() {
   const [username, setUsername] = useState('')
@@ -42,54 +73,82 @@ export default function Register() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="flex justify-center mb-4">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
-              <MessageSquare className="w-7 h-7 text-white" />
+    <div className="relative flex min-h-screen items-center justify-center bg-gradient-to-b from-sky-50 via-blue-50 to-indigo-100 overflow-hidden">
+      {/* 星星背景 */}
+      <Stars />
+      
+      {/* 装饰性光晕 */}
+      <div className="absolute top-1/4 -left-32 w-64 h-64 bg-blue-200/50 rounded-full blur-3xl" />
+      <div className="absolute bottom-1/4 -right-32 w-64 h-64 bg-indigo-200/50 rounded-full blur-3xl" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-sky-100/50 rounded-full blur-3xl" />
+
+      {/* 注册卡片 */}
+      <div className="relative z-10 w-full max-w-sm mx-4">
+        <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-xl shadow-blue-100/50 p-8">
+          {/* Logo */}
+          <div className="flex flex-col items-center mb-8">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center mb-4 shadow-lg shadow-blue-200">
+              <Rocket className="w-8 h-8 text-white" />
             </div>
+            <h1 className="text-2xl font-bold text-slate-800">加入航天知识库</h1>
+            <p className="text-sm text-slate-500 mt-1">开启你的探索之旅</p>
           </div>
-          <CardTitle className="text-2xl">注册</CardTitle>
-          <CardDescription>创建知识库问答助手账号</CardDescription>
-        </CardHeader>
-        <CardContent>
+
+          {/* 表单 */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">用户名</label>
-              <Input
+            <div>
+              <input
+                type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="3-20 个字符"
+                placeholder="用户名 (3-20 个字符)"
+                className="w-full px-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
               />
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium">密码</label>
-              <Input
+            <div>
+              <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="6-20 个字符"
+                placeholder="密码 (6-20 个字符)"
+                className="w-full px-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
               />
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium">确认密码</label>
-              <Input
+            <div>
+              <input
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="请再次输入密码"
+                placeholder="确认密码"
+                className="w-full px-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
               />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? '注册中...' : '注册'}
-            </Button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 bg-gradient-to-r from-sky-400 to-blue-500 text-white font-medium rounded-xl hover:from-sky-500 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-blue-200"
+            >
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  注册中...
+                </span>
+              ) : '立即注册'}
+            </button>
           </form>
-          <p className="mt-4 text-center text-sm text-gray-500">
-            已有账号？<Link to="/login" className="text-blue-600 hover:underline">立即登录</Link>
+
+          {/* 登录链接 */}
+          <p className="mt-6 text-center text-sm text-slate-500">
+            已有账号？
+            <Link to="/login" className="text-blue-500 hover:text-blue-600 ml-1 font-medium transition-colors">
+              立即登录
+            </Link>
           </p>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   )
 }

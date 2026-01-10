@@ -1,5 +1,5 @@
 import request from './request'
-import type { Conversation, Message, PaginatedResponse } from '@/types'
+import type { Conversation, Message, PaginatedResponse, RecommendedQuestion } from '@/types'
 
 export const chatApi = {
   // 获取对话列表
@@ -19,6 +19,10 @@ export const chatApi = {
   // 获取消息列表
   getMessages: (conversationId: number) => 
     request.get<unknown, Message[]>(`/chat/conversations/${conversationId}/messages`),
+
+  // 获取推荐问题（前台，随机5条）
+  getRecommendedQuestions: () =>
+    request.get<unknown, RecommendedQuestion[]>('/recommended-questions'),
 }
 
 // 流式对话

@@ -1,19 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { useChatStore } from '@/stores'
-import { Send, Paperclip } from 'lucide-react'
+import { chatApi } from '@/api'
+import type { RecommendedQuestion } from '@/types'
+import { Send } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
 import 'highlight.js/styles/github.css'
-
-// 推荐问题
-const suggestedQuestions = [
-  '这个知识库有什么内容？',
-  '如何使用这个问答系统？',
-  '帮我总结一下文档要点',
-  '有哪些常见问题？',
-]
 
 export default function Chat() {
   const {
@@ -25,8 +19,22 @@ export default function Chat() {
   } = useChatStore()
 
   const [input, setInput] = useState('')
+  const [recommendedQuestions, setRecommendedQuestions] = useState<RecommendedQuestion[]>([])
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  // 获取推荐问题
+  useEffect(() => {
+    const fetchRecommendedQuestions = async () => {
+      try {
+        const data = await chatApi.getRecommendedQuestions()
+        setRecommendedQuestions(data)
+      } catch (error) {
+        console.error('获取推荐问题失败:', error)
+      }
+    }
+    fetchRecommendedQuestions()
+  }, [])
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -47,11 +55,8 @@ export default function Chat() {
     await sendMessage(content)
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      handleSend()
-    }
+  const handleKeyDown = (_e: React.KeyboardEvent) => {
+    // 回车不发送，需要点击按钮发送
   }
 
   const handleSuggestedQuestion = async (question: string) => {
@@ -70,13 +75,13 @@ export default function Chat() {
           
           {/* 推荐问题 */}
           <div className="flex flex-wrap justify-center gap-3 max-w-2xl">
-            {suggestedQuestions.map((question, index) => (
+            {recommendedQuestions.map((question) => (
               <button
-                key={index}
-                onClick={() => handleSuggestedQuestion(question)}
+                key={question.id}
+                onClick={() => handleSuggestedQuestion(question.content)}
                 className="px-4 py-2.5 bg-white border border-gray-200 rounded-full text-sm text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-colors"
               >
-                {question}
+                {question.content}
               </button>
             ))}
           </div>
@@ -96,9 +101,6 @@ export default function Chat() {
                 className="w-full px-4 py-3.5 pr-24 resize-none rounded-2xl focus:outline-none text-gray-800 placeholder-gray-400"
               />
               <div className="absolute right-2 bottom-2 flex items-center gap-1">
-                <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                  <Paperclip className="w-5 h-5 text-gray-400" />
-                </button>
                 <button
                   onClick={handleSend}
                   disabled={!input.trim()}
@@ -205,9 +207,6 @@ export default function Chat() {
               className="w-full px-4 py-3.5 pr-24 resize-none rounded-2xl focus:outline-none text-gray-800 placeholder-gray-400 disabled:bg-gray-50"
             />
             <div className="absolute right-2 bottom-2 flex items-center gap-1">
-              <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                <Paperclip className="w-5 h-5 text-gray-400" />
-              </button>
               <button
                 onClick={handleSend}
                 disabled={!input.trim() || isStreaming}
