@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuthStore } from '@/stores'
+import { useAuthStore, useAppStore } from '@/stores'
 import { toast } from '@/components/common'
 import { Rocket } from 'lucide-react'
 
@@ -42,7 +42,12 @@ export default function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const { login, loading } = useAuthStore()
+  const { appInfo, fetchAppInfo } = useAppStore()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    fetchAppInfo()
+  }, [fetchAppInfo])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -74,10 +79,14 @@ export default function Login() {
         <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-xl shadow-blue-100/50 p-8">
           {/* Logo */}
           <div className="flex flex-col items-center mb-8">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center mb-4 shadow-lg shadow-blue-200">
-              <Rocket className="w-8 h-8 text-white" />
-            </div>
-            <h1 className="text-2xl font-bold text-slate-800">航天知识库</h1>
+            {appInfo.logo_url ? (
+              <img src={appInfo.logo_url} alt="Logo" className="w-16 h-16 rounded-2xl mb-4 object-contain" />
+            ) : (
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center mb-4 shadow-lg shadow-blue-200">
+                <Rocket className="w-8 h-8 text-white" />
+              </div>
+            )}
+            <h1 className="text-2xl font-bold text-slate-800">{appInfo.app_name}</h1>
             <p className="text-sm text-slate-500 mt-1">探索无限知识宇宙</p>
           </div>
 

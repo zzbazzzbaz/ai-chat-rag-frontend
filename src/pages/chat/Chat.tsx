@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useChatStore } from '@/stores'
+import { useChatStore, useAuthStore } from '@/stores'
 import { chatApi } from '@/api'
 import type { RecommendedQuestion } from '@/types'
 import { Send } from 'lucide-react'
@@ -17,6 +17,7 @@ export default function Chat() {
     streamingContent,
     sendMessage,
   } = useChatStore()
+  const user = useAuthStore((s) => s.user)
 
   const [input, setInput] = useState('')
   const [recommendedQuestions, setRecommendedQuestions] = useState<RecommendedQuestion[]>([])
@@ -155,9 +156,13 @@ export default function Chat() {
                       <p className="whitespace-pre-wrap break-words">{msg.content}</p>
                     </div>
                   </div>
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-sm font-medium">U</span>
-                  </div>
+                  {user?.avatar_url ? (
+                    <img src={user.avatar_url} alt="头像" className="w-8 h-8 rounded-full object-cover flex-shrink-0" />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-sm font-medium">{user?.username?.charAt(0).toUpperCase() || 'U'}</span>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

@@ -11,12 +11,13 @@ import {
   Settings
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { useChatStore, useAuthStore } from '@/stores'
+import { useChatStore, useAuthStore, useAppStore } from '@/stores'
 
 export default function UserLayout() {
   const [collapsed, setCollapsed] = useState(false)
   const navigate = useNavigate()
   const { user, logout } = useAuthStore()
+  const { appInfo, fetchAppInfo } = useAppStore()
   const {
     conversations,
     currentConversation,
@@ -28,7 +29,8 @@ export default function UserLayout() {
 
   useEffect(() => {
     loadConversations()
-  }, [loadConversations])
+    fetchAppInfo()
+  }, [loadConversations, fetchAppInfo])
 
   const handleNewChat = async () => {
     clearCurrentConversation()
@@ -57,10 +59,14 @@ export default function UserLayout() {
         {/* Logo 区域 */}
         <div className="h-14 flex items-center px-4 border-b">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
-              <MessageSquare className="w-5 h-5 text-white" />
-            </div>
-            <span className="font-semibold text-gray-800">知识问答</span>
+            {appInfo.logo_url ? (
+              <img src={appInfo.logo_url} alt="Logo" className="w-8 h-8 rounded-lg object-contain" />
+            ) : (
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                <MessageSquare className="w-5 h-5 text-white" />
+              </div>
+            )}
+            <span className="font-semibold text-gray-800">{appInfo.app_name}</span>
           </div>
           <button 
             onClick={() => setCollapsed(true)}
@@ -118,9 +124,13 @@ export default function UserLayout() {
             onClick={() => navigate('/profile')}
             className="flex items-center gap-2 px-2 py-2 hover:bg-gray-100 rounded-lg cursor-pointer"
           >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center text-white text-sm font-medium">
-              {user?.username?.charAt(0).toUpperCase() || 'U'}
-            </div>
+            {user?.avatar_url ? (
+              <img src={user.avatar_url} alt="头像" className="w-8 h-8 rounded-full object-cover" />
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center text-white text-sm font-medium">
+                {user?.username?.charAt(0).toUpperCase() || 'U'}
+              </div>
+            )}
             <span className="text-sm text-gray-700 flex-1">{user?.username || '用户'}</span>
             <ChevronRight className="w-4 h-4 text-gray-400" />
           </div>

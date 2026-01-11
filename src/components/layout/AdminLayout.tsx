@@ -1,6 +1,8 @@
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import { LayoutDashboard, Users, Database, MessageSquare, Settings, ArrowLeft, Rocket, HelpCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useAppStore } from '@/stores'
 
 const navItems = [
   { path: '/admin', icon: LayoutDashboard, label: '仪表盘', exact: true },
@@ -14,6 +16,11 @@ const navItems = [
 export default function AdminLayout() {
   const navigate = useNavigate()
   const location = useLocation()
+  const { appInfo, fetchAppInfo } = useAppStore()
+
+  useEffect(() => {
+    fetchAppInfo()
+  }, [fetchAppInfo])
 
   const isActive = (item: typeof navItems[0]) => {
     if (item.exact) {
@@ -28,12 +35,16 @@ export default function AdminLayout() {
       <aside className="w-64 bg-white/70 backdrop-blur-xl border-r border-white/80 flex flex-col shadow-lg shadow-blue-100/20">
         <div className="p-5 border-b border-slate-100">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center shadow-lg shadow-blue-200">
-              <Rocket className="h-5 w-5 text-white" />
-            </div>
+            {appInfo.logo_url ? (
+              <img src={appInfo.logo_url} alt="Logo" className="w-10 h-10 rounded-xl object-contain" />
+            ) : (
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center shadow-lg shadow-blue-200">
+                <Rocket className="h-5 w-5 text-white" />
+              </div>
+            )}
             <div>
               <h1 className="font-bold text-slate-800">管理后台</h1>
-              <p className="text-xs text-slate-500">航天知识库</p>
+              <p className="text-xs text-slate-500">{appInfo.app_name}</p>
             </div>
           </div>
         </div>

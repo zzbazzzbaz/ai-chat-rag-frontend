@@ -22,6 +22,7 @@ interface AuthState {
   register: (params: RegisterParams) => Promise<void>
   logout: () => Promise<void>
   loadUser: () => Promise<void>
+  setUser: (user: User) => void
 }
 
 export const useAuthStore = create<AuthState>((set, get) => ({
@@ -30,6 +31,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   isAuthenticated: !!localStorage.getItem('token'),
   loading: false,
   initialized: false,
+
+  setUser: (user) => {
+    localStorage.setItem('user', JSON.stringify(user))
+    set({ user })
+  },
 
   login: async (params) => {
     set({ loading: true })

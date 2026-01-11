@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { adminConfigApi } from '@/api'
 import type { SystemConfig } from '@/types'
-import { Save, TestTube, Loader2, Cpu, MessageSquare, CheckCircle, XCircle, Sparkles } from 'lucide-react'
+import { Save, TestTube, Loader2, Cpu, MessageSquare, CheckCircle, XCircle, Sparkles, Settings, Upload, Trash2, Image } from 'lucide-react'
 
 export default function SystemSettings() {
   const [config, setConfig] = useState<SystemConfig>({
@@ -12,11 +12,15 @@ export default function SystemSettings() {
     embedding_api_url: '',
     embedding_api_key: '',
     embedding_model_name: '',
+    app_name: '知识库问答助手',
+    logo_url: null,
   })
   const [loading, setLoading] = useState(false)
   const [saving, setSaving] = useState(false)
   const [testingLlm, setTestingLlm] = useState(false)
   const [testingEmbedding, setTestingEmbedding] = useState(false)
+  const [uploadingLogo, setUploadingLogo] = useState(false)
+  const logoInputRef = useRef<HTMLInputElement>(null)
   const [llmTestResult, setLlmTestResult] = useState<{ success: boolean; message: string } | null>(null)
   const [embeddingTestResult, setEmbeddingTestResult] = useState<{ success: boolean; message: string } | null>(null)
 
@@ -92,6 +96,36 @@ export default function SystemSettings() {
       })
     } finally {
       setTestingEmbedding(false)
+    }
+  }
+
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploadingLogo(true)
+    try {
+      const result = await adminConfigApi.uploadLogo(file)
+      setConfig({ ...config, logo_url: result.logo_url })
+      alert('Logo 上传成功')
+    } catch (error) {
+      console.error('上传失败:', error)
+      alert('Logo 上传失败')
+    } finally {
+      setUploadingLogo(false)
+      if (logoInputRef.current) logoInputRef.current.value = ''
+    }
+  }
+
+  const handleDeleteLogo = async () => {
+    if (!confirm('确定要删除 Logo 吗？')) return
+    try {
+      await adminConfigApi.deleteLogo()
+      setConfig({ ...config, logo_url: null })
+      alert('Logo 已删除')
+    } catch (error) {
+      console.error('删除失败:', error)
+      alert('删除失败')
     }
   }
 
@@ -220,6 +254,72 @@ export default function SystemSettings() {
                   {embeddingTestResult.message}
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 应用配置 */}
+      <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg shadow-blue-100/30 overflow-hidden">
+        <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/50">
+          <h3 className="font-semibold text-slate-800 flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center">
+              <Settings className="h-4 w-4 text-white" />
+            </div>
+            应用配置
+          </h3>
+        </div>
+        <div className="p-6 grid gap-5 md:grid-cols-2">
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">应用名称</label>
+            <input
+              value={config.app_name}
+              onChange={(e) => setConfig({ ...config, app_name: e.target.value })}
+              placeholder="知识库问答助手"
+              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+            />
+            <p className="text-xs text-slate-400 mt-2">显示在页面标题和侧边栏的应用名称</p>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">应用 Logo</label>
+            <div className="flex items-center gap-4">
+              {config.logo_url ? (
+                <div className="relative">
+                  <img
+                    src={config.logo_url}
+                    alt="Logo"
+                    className="w-16 h-16 rounded-xl object-contain border border-slate-200 bg-white"
+                  />
+                  <button
+                    onClick={handleDeleteLogo}
+                    className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
+                  >
+                    <Trash2 className="h-3 w-3" />
+                  </button>
+                </div>
+              ) : (
+                <div className="w-16 h-16 rounded-xl border-2 border-dashed border-slate-300 flex items-center justify-center bg-slate-50">
+                  <Image className="h-6 w-6 text-slate-400" />
+                </div>
+              )}
+              <div>
+                <input
+                  ref={logoInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleLogoUpload}
+                  className="hidden"
+                />
+                <button
+                  onClick={() => logoInputRef.current?.click()}
+                  disabled={uploadingLogo}
+                  className="flex items-center gap-2 px-4 py-2.5 border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 transition-colors disabled:opacity-50"
+                >
+                  {uploadingLogo ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+                  {config.logo_url ? '更换 Logo' : '上传 Logo'}
+                </button>
+                <p className="text-xs text-slate-400 mt-2">支持 PNG、JPG、SVG，最大 5MB</p>
+              </div>
             </div>
           </div>
         </div>

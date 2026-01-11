@@ -104,6 +104,19 @@ export const adminConfigApi = {
   // 测试 Embedding 配置
   testEmbeddingConfig: (config: { api_key: string; model_name: string; base_url: string }) =>
     request.post<unknown, ConfigTestResult>('/admin/config/test-embedding', config),
+
+  // 上传 Logo
+  uploadLogo: (file: File) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    return request.post<unknown, { logo_url: string }>('/admin/config/logo', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+  },
+
+  // 删除 Logo
+  deleteLogo: () =>
+    request.delete('/admin/config/logo'),
 }
 
 

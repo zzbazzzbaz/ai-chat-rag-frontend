@@ -1,16 +1,37 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useAuthStore } from '@/stores'
 import { userApi } from '@/api'
-import { User, Calendar, MessageSquare, FileText, Zap, Rocket } from 'lucide-react'
+import { User, Calendar, MessageSquare, FileText, Zap, Rocket, Upload, Loader2 } from 'lucide-react'
 import type { UserStats } from '@/types'
 
 export default function Profile() {
-  const user = useAuthStore((s) => s.user)
+  const { user, setUser } = useAuthStore()
   const [stats, setStats] = useState<UserStats | null>(null)
+  const [uploading, setUploading] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     userApi.getStats().then(setStats).catch(() => {})
   }, [])
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploading(true)
+    try {
+      const result = await userApi.uploadAvatar(file)
+      if (user) {
+        setUser({ ...user, avatar_url: result.avatar_url })
+      }
+    } catch (error) {
+      console.error('上传失败:', error)
+      alert('头像上传失败')
+    } finally {
+      setUploading(false)
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    }
+  }
 
   return (
     <div className="min-h-full bg-gradient-to-b from-slate-50 to-blue-50/30 p-6">
@@ -24,10 +45,34 @@ export default function Profile() {
         {/* 用户卡片 */}
         <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg shadow-blue-100/30 p-6 mb-6">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center shadow-lg shadow-blue-200">
-              <span className="text-2xl font-bold text-white">
-                {user?.username?.charAt(0).toUpperCase() || 'U'}
-              </span>
+            <div className="relative group">
+              {user?.avatar_url ? (
+                <img src={user.avatar_url} alt="头像" className="w-16 h-16 rounded-2xl object-cover shadow-lg shadow-blue-200" />
+              ) : (
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center shadow-lg shadow-blue-200">
+                  <span className="text-2xl font-bold text-white">
+                    {user?.username?.charAt(0).toUpperCase() || 'U'}
+                  </span>
+                </div>
+              )}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleAvatarUpload}
+                className="hidden"
+              />
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploading}
+                className="absolute inset-0 bg-black/50 rounded-2xl opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity"
+              >
+                {uploading ? (
+                  <Loader2 className="w-5 h-5 text-white animate-spin" />
+                ) : (
+                  <Upload className="w-5 h-5 text-white" />
+                )}
+              </button>
             </div>
             <div>
               <h2 className="text-xl font-bold text-slate-800">{user?.username}</h2>

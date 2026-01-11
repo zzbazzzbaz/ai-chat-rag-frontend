@@ -3,6 +3,7 @@ export interface User {
   id: number
   username: string
   is_admin: boolean
+  avatar_url?: string | null
   created_at: string
   last_login?: string | null
 }
@@ -75,6 +76,8 @@ export interface SystemConfig {
   embedding_api_url: string
   embedding_api_key: string
   embedding_model_name: string
+  app_name: string
+  logo_url?: string | null
 }
 
 // 配置测试请求
