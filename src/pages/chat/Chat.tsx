@@ -56,10 +56,6 @@ export default function Chat() {
     await sendMessage(content)
   }
 
-  const handleKeyDown = (_e: React.KeyboardEvent) => {
-    // 回车不发送，需要点击按钮发送
-  }
-
   const handleSuggestedQuestion = async (question: string) => {
     await sendMessage(question)
   }
@@ -96,7 +92,6 @@ export default function Chat() {
                 ref={textareaRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyDown}
                 placeholder="发消息..."
                 rows={1}
                 className="w-full px-4 py-3.5 pr-24 resize-none rounded-2xl focus:outline-none text-gray-800 placeholder-gray-400"
@@ -205,7 +200,6 @@ export default function Chat() {
               ref={textareaRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
               placeholder="发消息..."
               disabled={isStreaming}
               rows={1}

@@ -1,42 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/stores'
-import { toast } from '@/components/common'
+import { toast, Stars } from '@/components/common'
 import { Rocket } from 'lucide-react'
-
-// 星星组件
-function Stars() {
-  const [stars, setStars] = useState<{ id: number; x: number; y: number; size: number; delay: number }[]>([])
-  
-  useEffect(() => {
-    const newStars = Array.from({ length: 40 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 3 + 2,
-      delay: Math.random() * 3,
-    }))
-    setStars(newStars)
-  }, [])
-
-  return (
-    <div className="absolute inset-0 overflow-hidden">
-      {stars.map((star) => (
-        <div
-          key={star.id}
-          className="absolute rounded-full bg-blue-400/40 animate-twinkle"
-          style={{
-            left: `${star.x}%`,
-            top: `${star.y}%`,
-            width: `${star.size}px`,
-            height: `${star.size}px`,
-            animationDelay: `${star.delay}s`,
-          }}
-        />
-      ))}
-    </div>
-  )
-}
 
 export default function Register() {
   const [username, setUsername] = useState('')
