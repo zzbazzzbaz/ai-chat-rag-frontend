@@ -101,4 +101,6 @@ export const router = createBrowserRouter([
       { path: 'settings', element: <SuspenseWrapper><SystemSettings /></SuspenseWrapper> },
     ],
   },
-])
+], {
+  basename: import.meta.env.BASE_URL === '/' ? undefined : import.meta.env.BASE_URL,
+})

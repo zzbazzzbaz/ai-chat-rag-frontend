@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { adminConfigApi } from '@/api'
 import type { SystemConfig } from '@/types'
 import { Save, TestTube, Loader2, Cpu, MessageSquare, CheckCircle, XCircle, Sparkles, Settings, Upload, Trash2, Image } from 'lucide-react'
+import { withBasePath } from '@/lib/utils'
 
 export default function SystemSettings() {
   const [config, setConfig] = useState<SystemConfig>({
@@ -286,7 +287,7 @@ export default function SystemSettings() {
               {config.logo_url ? (
                 <div className="relative">
                   <img
-                    src={config.logo_url}
+                    src={withBasePath(config.logo_url)}
                     alt="Logo"
                     className="w-16 h-16 rounded-xl object-contain border border-sky-300/20 bg-slate-950/30"
                   />

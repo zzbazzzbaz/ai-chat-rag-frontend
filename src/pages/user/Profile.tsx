@@ -3,6 +3,7 @@ import { useAuthStore } from '@/stores'
 import { userApi } from '@/api'
 import { User, Calendar, MessageSquare, FileText, Zap, Rocket, Upload, Loader2 } from 'lucide-react'
 import type { UserStats } from '@/types'
+import { withBasePath } from '@/lib/utils'
 
 export default function Profile() {
   const { user, setUser } = useAuthStore()
@@ -47,7 +48,7 @@ export default function Profile() {
           <div className="flex items-center gap-4">
             <div className="relative group">
               {user?.avatar_url ? (
-                <img src={user.avatar_url} alt="头像" className="w-16 h-16 rounded-2xl object-cover shadow-lg shadow-slate-950/30" />
+                <img src={withBasePath(user.avatar_url)} alt="头像" className="w-16 h-16 rounded-2xl object-cover shadow-lg shadow-slate-950/30" />
               ) : (
                 <div className="w-16 h-16 rounded-2xl deep-glow-icon flex items-center justify-center">
                   <span className="text-2xl font-bold text-white">

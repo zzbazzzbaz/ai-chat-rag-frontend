@@ -2,7 +2,7 @@ import axios from 'axios'
 import type { ApiResponse } from '@/types'
 
 const request = axios.create({
-  baseURL: '/api/v1',
+  baseURL: `${import.meta.env.BASE_URL}api/v1`,
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ request.interceptors.response.use(
         // Token 过期
         localStorage.removeItem('token')
         localStorage.removeItem('user')
-        window.location.href = '/login'
+        window.location.href = `${import.meta.env.BASE_URL}login`
       }
       return Promise.reject(new Error(res.message || '请求失败'))
     }
@@ -43,7 +43,7 @@ request.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem('token')
       localStorage.removeItem('user')
-      window.location.href = '/login'
+      window.location.href = `${import.meta.env.BASE_URL}login`
     }
     return Promise.reject(error)
   }

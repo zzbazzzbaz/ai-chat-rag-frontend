@@ -10,7 +10,7 @@ import {
   LogOut,
   Settings
 } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn, withBasePath } from '@/lib/utils'
 import { useChatStore, useAuthStore, useAppStore } from '@/stores'
 
 export default function UserLayout() {
@@ -60,7 +60,7 @@ export default function UserLayout() {
         <div className="h-14 flex items-center px-4 border-b border-sky-300/15">
           <div className="flex items-center gap-2">
             {appInfo.logo_url ? (
-              <img src={appInfo.logo_url} alt="Logo" className="w-8 h-8 rounded-lg object-contain" />
+              <img src={withBasePath(appInfo.logo_url)} alt="Logo" className="w-8 h-8 rounded-lg object-contain" />
             ) : (
               <div className="w-8 h-8 rounded-lg deep-glow-icon flex items-center justify-center">
                 <MessageSquare className="w-5 h-5 text-white" />
@@ -125,7 +125,7 @@ export default function UserLayout() {
             className="flex items-center gap-2 px-2 py-2 hover:bg-sky-400/10 rounded-lg cursor-pointer"
           >
             {user?.avatar_url ? (
-              <img src={user.avatar_url} alt="头像" className="w-8 h-8 rounded-full object-cover" />
+              <img src={withBasePath(user.avatar_url)} alt="头像" className="w-8 h-8 rounded-full object-cover" />
             ) : (
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-blue-700 flex items-center justify-center text-white text-sm font-medium">
                 {user?.username?.charAt(0).toUpperCase() || 'U'}

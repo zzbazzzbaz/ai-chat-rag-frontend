@@ -91,19 +91,19 @@ export default function Dashboard() {
       <div className="deep-panel rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-sky-50 mb-4">快捷操作</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <a href="/admin/users" className="flex flex-col items-center gap-2 p-4 rounded-xl deep-btn-secondary transition-colors">
+          <a href={`${import.meta.env.BASE_URL}admin/users`} className="flex flex-col items-center gap-2 p-4 rounded-xl deep-btn-secondary transition-colors">
             <Users className="h-6 w-6 text-cyan-300" />
             <span className="text-sm text-blue-100">用户管理</span>
           </a>
-          <a href="/admin/knowledge" className="flex flex-col items-center gap-2 p-4 rounded-xl deep-btn-secondary transition-colors">
+          <a href={`${import.meta.env.BASE_URL}admin/knowledge`} className="flex flex-col items-center gap-2 p-4 rounded-xl deep-btn-secondary transition-colors">
             <Database className="h-6 w-6 text-emerald-500" />
             <span className="text-sm text-blue-100">知识库管理</span>
           </a>
-          <a href="/admin/conversations" className="flex flex-col items-center gap-2 p-4 rounded-xl deep-btn-secondary transition-colors">
+          <a href={`${import.meta.env.BASE_URL}admin/conversations`} className="flex flex-col items-center gap-2 p-4 rounded-xl deep-btn-secondary transition-colors">
             <MessageSquare className="h-6 w-6 text-violet-300" />
             <span className="text-sm text-blue-100">对话管理</span>
           </a>
-          <a href="/admin/settings" className="flex flex-col items-center gap-2 p-4 rounded-xl deep-btn-secondary transition-colors">
+          <a href={`${import.meta.env.BASE_URL}admin/settings`} className="flex flex-col items-center gap-2 p-4 rounded-xl deep-btn-secondary transition-colors">
             <FileText className="h-6 w-6 text-amber-500" />
             <span className="text-sm text-blue-100">系统设置</span>
           </a>

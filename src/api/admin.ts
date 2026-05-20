@@ -58,7 +58,7 @@ export const adminKnowledgeApi = {
   // 下载文件
   download: async (id: number, filename: string) => {
     const token = localStorage.getItem('token')
-    const response = await fetch(`/api/v1/admin/knowledge/${id}/download`, {
+    const response = await fetch(`${import.meta.env.BASE_URL}api/v1/admin/knowledge/${id}/download`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     if (!response.ok) throw new Error('下载失败')

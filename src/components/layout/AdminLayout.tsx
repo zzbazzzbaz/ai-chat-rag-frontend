@@ -1,7 +1,7 @@
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { LayoutDashboard, Users, Database, MessageSquare, Settings, ArrowLeft, Rocket, HelpCircle } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn, withBasePath } from '@/lib/utils'
 import { useAppStore } from '@/stores'
 
 const navItems = [
@@ -36,7 +36,7 @@ export default function AdminLayout() {
         <div className="p-5 border-b border-sky-300/15">
           <div className="flex items-center gap-3">
             {appInfo.logo_url ? (
-              <img src={appInfo.logo_url} alt="Logo" className="w-10 h-10 rounded-xl object-contain" />
+              <img src={withBasePath(appInfo.logo_url)} alt="Logo" className="w-10 h-10 rounded-xl object-contain" />
             ) : (
               <div className="w-10 h-10 rounded-xl deep-glow-icon flex items-center justify-center">
                 <Rocket className="h-5 w-5 text-white" />

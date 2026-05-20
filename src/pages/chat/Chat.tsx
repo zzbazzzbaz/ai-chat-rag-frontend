@@ -3,7 +3,7 @@ import { useChatStore, useAuthStore } from '@/stores'
 import { chatApi } from '@/api'
 import type { RecommendedQuestion } from '@/types'
 import { Send } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn, withBasePath } from '@/lib/utils'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
@@ -156,7 +156,7 @@ export default function Chat() {
                     </div>
                   </div>
                   {user?.avatar_url ? (
-                    <img src={user.avatar_url} alt="头像" className="w-8 h-8 rounded-full object-cover flex-shrink-0" />
+                    <img src={withBasePath(user.avatar_url)} alt="头像" className="w-8 h-8 rounded-full object-cover flex-shrink-0" />
                   ) : (
                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-blue-700 flex items-center justify-center flex-shrink-0">
                       <span className="text-white text-sm font-medium">{user?.username?.charAt(0).toUpperCase() || 'U'}</span>

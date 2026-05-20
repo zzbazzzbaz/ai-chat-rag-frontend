@@ -36,7 +36,7 @@ export const streamChat = async (
   const token = localStorage.getItem('token')
   
   try {
-    const response = await fetch('/api/v1/chat/stream', {
+    const response = await fetch(`${import.meta.env.BASE_URL}api/v1/chat/stream`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

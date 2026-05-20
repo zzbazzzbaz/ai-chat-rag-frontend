@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore, useAppStore } from '@/stores'
 import { toast, Stars } from '@/components/common'
 import { Rocket } from 'lucide-react'
+import { withBasePath } from '@/lib/utils'
 
 export default function Login() {
   const [username, setUsername] = useState('')
@@ -41,7 +42,7 @@ export default function Login() {
           {/* Logo */}
           <div className="flex flex-col items-center mb-8">
             {appInfo.logo_url ? (
-              <img src={appInfo.logo_url} alt="Logo" className="w-16 h-16 rounded-2xl mb-4 object-contain" />
+              <img src={withBasePath(appInfo.logo_url)} alt="Logo" className="w-16 h-16 rounded-2xl mb-4 object-contain" />
             ) : (
               <div className="w-16 h-16 rounded-2xl deep-glow-icon flex items-center justify-center mb-4">
                 <Rocket className="w-8 h-8 text-white" />

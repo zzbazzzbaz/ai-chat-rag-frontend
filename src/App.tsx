@@ -3,6 +3,7 @@ import { router } from '@/router'
 import { ToastContainer } from '@/components/common'
 import { useEffect } from 'react'
 import { useAuthStore, useAppStore } from '@/stores'
+import { withBasePath } from '@/lib/utils'
 
 function App() {
   const loadUser = useAuthStore((s) => s.loadUser)
@@ -20,7 +21,7 @@ function App() {
     if (appInfo.logo_url) {
       const link = document.querySelector("link[rel~='icon']") as HTMLLinkElement
       if (link) {
-        link.href = appInfo.logo_url
+        link.href = withBasePath(appInfo.logo_url)
       }
     }
   }, [appInfo.app_name, appInfo.logo_url])
