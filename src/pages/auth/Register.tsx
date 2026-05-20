@@ -56,8 +56,8 @@ export default function Register() {
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center mb-4 shadow-lg shadow-blue-200">
               <Rocket className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-slate-800">加入航天知识库</h1>
-            <p className="text-sm text-slate-500 mt-1">开启你的探索之旅</p>
+            <h1 className="text-2xl font-bold text-slate-800">创建个人知识库账号</h1>
+            <p className="text-sm text-slate-500 mt-1">开始管理你的知识资料</p>
           </div>
 
           {/* 表单 */}

@@ -12,7 +12,7 @@ export default function SystemSettings() {
     embedding_api_url: '',
     embedding_api_key: '',
     embedding_model_name: '',
-    app_name: '知识库问答助手',
+    app_name: '基于RAG的个人知识库',
     logo_url: null,
   })
   const [loading, setLoading] = useState(false)
@@ -275,7 +275,7 @@ export default function SystemSettings() {
             <input
               value={config.app_name}
               onChange={(e) => setConfig({ ...config, app_name: e.target.value })}
-              placeholder="知识库问答助手"
+              placeholder="基于RAG的个人知识库"
               className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
             />
             <p className="text-xs text-slate-400 mt-2">显示在页面标题和侧边栏的应用名称</p>
@@ -339,7 +339,7 @@ export default function SystemSettings() {
           <textarea
             value={config.system_prompt}
             onChange={(e) => setConfig({ ...config, system_prompt: e.target.value })}
-            placeholder="你是一个专业的航天知识助手..."
+            placeholder="你是一个专业的个人知识库问答助手..."
             className="w-full h-40 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 resize-none focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
           />
           <p className="text-xs text-slate-400 mt-2">设置 AI 助手的角色和行为规范</p>

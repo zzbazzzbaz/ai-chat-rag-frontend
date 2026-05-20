@@ -14,7 +14,7 @@ interface AppStore {
 
 export const useAppStore = create<AppStore>((set) => ({
   appInfo: {
-    app_name: '知识库问答助手',
+    app_name: '基于RAG的个人知识库',
     logo_url: null,
   },
   loading: false,
