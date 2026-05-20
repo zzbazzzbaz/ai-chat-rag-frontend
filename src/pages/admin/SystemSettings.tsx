@@ -149,8 +149,8 @@ export default function SystemSettings() {
       
       <div className="grid gap-6 lg:grid-cols-2">
         {/* LLM 模型配置 */}
-        <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg shadow-blue-100/30 overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/50">
+        <div className="deep-panel rounded-2xl overflow-hidden">
+          <div className="px-6 py-4 border-b deep-panel-header">
             <h3 className="font-semibold text-slate-800 flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center">
                 <Cpu className="h-4 w-4 text-white" />
@@ -165,7 +165,7 @@ export default function SystemSettings() {
                 value={config.llm_api_url}
                 onChange={(e) => setConfig({ ...config, llm_api_url: e.target.value })}
                 placeholder="https://dashscope.aliyuncs.com/compatible-mode/v1"
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+                className="w-full px-4 py-3 deep-input rounded-xl transition-all"
               />
             </div>
             <div>
@@ -175,7 +175,7 @@ export default function SystemSettings() {
                 value={config.llm_api_key}
                 onChange={(e) => setConfig({ ...config, llm_api_key: e.target.value })}
                 placeholder="sk-xxxx"
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+                className="w-full px-4 py-3 deep-input rounded-xl transition-all"
               />
             </div>
             <div>
@@ -184,12 +184,12 @@ export default function SystemSettings() {
                 value={config.llm_model_name}
                 onChange={(e) => setConfig({ ...config, llm_model_name: e.target.value })}
                 placeholder="qwen-plus"
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+                className="w-full px-4 py-3 deep-input rounded-xl transition-all"
               />
             </div>
             <div className="flex items-center gap-3 pt-2">
               <button onClick={handleTestLlm} disabled={testingLlm}
-                className="flex items-center gap-2 px-4 py-2.5 border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 transition-colors disabled:opacity-50">
+                className="flex items-center gap-2 px-4 py-2.5 deep-btn-secondary rounded-xl transition-colors disabled:opacity-50">
                 {testingLlm ? <Loader2 className="h-4 w-4 animate-spin" /> : <TestTube className="h-4 w-4" />}
                 测试连接
               </button>
@@ -204,8 +204,8 @@ export default function SystemSettings() {
         </div>
 
         {/* Embedding 模型配置 */}
-        <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg shadow-blue-100/30 overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/50">
+        <div className="deep-panel rounded-2xl overflow-hidden">
+          <div className="px-6 py-4 border-b deep-panel-header">
             <h3 className="font-semibold text-slate-800 flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center">
                 <Sparkles className="h-4 w-4 text-white" />
@@ -220,7 +220,7 @@ export default function SystemSettings() {
                 value={config.embedding_api_url}
                 onChange={(e) => setConfig({ ...config, embedding_api_url: e.target.value })}
                 placeholder="https://dashscope.aliyuncs.com/compatible-mode/v1"
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+                className="w-full px-4 py-3 deep-input rounded-xl transition-all"
               />
             </div>
             <div>
@@ -230,7 +230,7 @@ export default function SystemSettings() {
                 value={config.embedding_api_key}
                 onChange={(e) => setConfig({ ...config, embedding_api_key: e.target.value })}
                 placeholder="sk-xxxx"
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+                className="w-full px-4 py-3 deep-input rounded-xl transition-all"
               />
             </div>
             <div>
@@ -239,12 +239,12 @@ export default function SystemSettings() {
                 value={config.embedding_model_name}
                 onChange={(e) => setConfig({ ...config, embedding_model_name: e.target.value })}
                 placeholder="text-embedding-v3"
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+                className="w-full px-4 py-3 deep-input rounded-xl transition-all"
               />
             </div>
             <div className="flex items-center gap-3 pt-2">
               <button onClick={handleTestEmbedding} disabled={testingEmbedding}
-                className="flex items-center gap-2 px-4 py-2.5 border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 transition-colors disabled:opacity-50">
+                className="flex items-center gap-2 px-4 py-2.5 deep-btn-secondary rounded-xl transition-colors disabled:opacity-50">
                 {testingEmbedding ? <Loader2 className="h-4 w-4 animate-spin" /> : <TestTube className="h-4 w-4" />}
                 测试连接
               </button>
@@ -260,8 +260,8 @@ export default function SystemSettings() {
       </div>
 
       {/* 应用配置 */}
-      <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg shadow-blue-100/30 overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/50">
+      <div className="deep-panel rounded-2xl overflow-hidden">
+        <div className="px-6 py-4 border-b deep-panel-header">
           <h3 className="font-semibold text-slate-800 flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center">
               <Settings className="h-4 w-4 text-white" />
@@ -276,7 +276,7 @@ export default function SystemSettings() {
               value={config.app_name}
               onChange={(e) => setConfig({ ...config, app_name: e.target.value })}
               placeholder="基于RAG的个人知识库"
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+              className="w-full px-4 py-3 deep-input rounded-xl transition-all"
             />
             <p className="text-xs text-slate-400 mt-2">显示在页面标题和侧边栏的应用名称</p>
           </div>
@@ -288,7 +288,7 @@ export default function SystemSettings() {
                   <img
                     src={config.logo_url}
                     alt="Logo"
-                    className="w-16 h-16 rounded-xl object-contain border border-slate-200 bg-white"
+                    className="w-16 h-16 rounded-xl object-contain border border-sky-300/20 bg-slate-950/30"
                   />
                   <button
                     onClick={handleDeleteLogo}
@@ -313,7 +313,7 @@ export default function SystemSettings() {
                 <button
                   onClick={() => logoInputRef.current?.click()}
                   disabled={uploadingLogo}
-                  className="flex items-center gap-2 px-4 py-2.5 border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 transition-colors disabled:opacity-50"
+                  className="flex items-center gap-2 px-4 py-2.5 deep-btn-secondary rounded-xl transition-colors disabled:opacity-50"
                 >
                   {uploadingLogo ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
                   {config.logo_url ? '更换 Logo' : '上传 Logo'}
@@ -326,8 +326,8 @@ export default function SystemSettings() {
       </div>
 
       {/* 系统提示词 */}
-      <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg shadow-blue-100/30 overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/50">
+      <div className="deep-panel rounded-2xl overflow-hidden">
+        <div className="px-6 py-4 border-b deep-panel-header">
           <h3 className="font-semibold text-slate-800 flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center">
               <MessageSquare className="h-4 w-4 text-white" />
@@ -340,7 +340,7 @@ export default function SystemSettings() {
             value={config.system_prompt}
             onChange={(e) => setConfig({ ...config, system_prompt: e.target.value })}
             placeholder="你是一个专业的个人知识库问答助手..."
-            className="w-full h-40 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 resize-none focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+            className="w-full h-40 px-4 py-3 deep-input rounded-xl resize-none transition-all"
           />
           <p className="text-xs text-slate-400 mt-2">设置 AI 助手的角色和行为规范</p>
         </div>
@@ -349,7 +349,7 @@ export default function SystemSettings() {
       {/* 保存按钮 */}
       <div className="flex justify-end">
         <button onClick={handleSave} disabled={saving}
-          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-400 to-blue-500 text-white rounded-xl hover:from-sky-500 hover:to-blue-600 transition-all shadow-lg shadow-blue-200/50 disabled:opacity-50">
+          className="flex items-center gap-2 px-6 py-3 deep-btn-primary rounded-xl transition-all disabled:opacity-50">
           {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
           保存配置
         </button>

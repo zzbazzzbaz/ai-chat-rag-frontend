@@ -90,7 +90,7 @@ export default function RecommendedQuestions() {
         </div>
         <button
           onClick={() => setShowAddForm(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-sky-400 to-blue-500 text-white rounded-xl hover:from-sky-500 hover:to-blue-600 transition-all shadow-lg shadow-blue-200/50"
+          className="flex items-center gap-2 px-4 py-2.5 deep-btn-primary rounded-xl transition-all"
         >
           <Plus className="h-4 w-4" />
           添加问题
@@ -99,20 +99,20 @@ export default function RecommendedQuestions() {
 
       {/* 添加表单 */}
       {showAddForm && (
-        <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg shadow-blue-100/30 p-6">
+        <div className="deep-panel rounded-2xl p-6">
           <h3 className="font-semibold text-slate-800 mb-4">添加推荐问题</h3>
           <div className="flex items-center gap-3">
             <input
               value={newQuestion}
               onChange={(e) => setNewQuestion(e.target.value)}
               placeholder="输入推荐问题内容..."
-              className="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+              className="flex-1 px-4 py-3 deep-input rounded-xl transition-all"
               onKeyDown={(e) => e.key === 'Enter' && handleAddQuestion()}
               autoFocus
             />
             <button
               onClick={handleAddQuestion}
-              className="px-5 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors"
+              className="px-5 py-3 deep-btn-primary rounded-xl transition-colors"
             >
               确定
             </button>
@@ -127,8 +127,8 @@ export default function RecommendedQuestions() {
       )}
 
       {/* 问题列表 */}
-      <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg shadow-blue-100/30 overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/50">
+      <div className="deep-panel rounded-2xl overflow-hidden">
+        <div className="px-6 py-4 border-b deep-panel-header">
           <h3 className="font-semibold text-slate-800 flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
               <HelpCircle className="h-4 w-4 text-white" />
@@ -156,7 +156,7 @@ export default function RecommendedQuestions() {
               <div
                 key={question.id}
                 className={`flex items-center gap-4 px-6 py-4 transition-colors ${
-                  question.is_active ? 'bg-white' : 'bg-slate-50/50'
+                  question.is_active ? 'bg-sky-400/5' : 'bg-slate-950/20'
                 }`}
               >
                 {editingQuestion?.id === question.id ? (
@@ -164,13 +164,13 @@ export default function RecommendedQuestions() {
                     <input
                       value={editingQuestion.content}
                       onChange={(e) => setEditingQuestion({ ...editingQuestion, content: e.target.value })}
-                      className="flex-1 px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                      className="flex-1 px-4 py-2 deep-input rounded-xl text-sm"
                       onKeyDown={(e) => e.key === 'Enter' && handleUpdateQuestion(question.id, editingQuestion.content)}
                       autoFocus
                     />
                     <button
                       onClick={() => handleUpdateQuestion(question.id, editingQuestion.content)}
-                      className="px-4 py-2 bg-blue-500 text-white text-sm rounded-lg hover:bg-blue-600 transition-colors"
+                      className="px-4 py-2 deep-btn-primary text-sm rounded-lg transition-colors"
                     >
                       保存
                     </button>

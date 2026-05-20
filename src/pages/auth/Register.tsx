@@ -39,25 +39,20 @@ export default function Register() {
   }
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center bg-gradient-to-b from-sky-50 via-blue-50 to-indigo-100 overflow-hidden">
-      {/* 星星背景 */}
+    <div className="auth-shell relative flex min-h-screen items-center justify-center deep-page overflow-hidden">
+      {/* 微光背景 */}
       <Stars />
-      
-      {/* 装饰性光晕 */}
-      <div className="absolute top-1/4 -left-32 w-64 h-64 bg-blue-200/50 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 -right-32 w-64 h-64 bg-indigo-200/50 rounded-full blur-3xl" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-sky-100/50 rounded-full blur-3xl" />
 
       {/* 注册卡片 */}
       <div className="relative z-10 w-full max-w-sm mx-4">
-        <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-xl shadow-blue-100/50 p-8">
+        <div className="deep-panel-strong rounded-2xl p-8">
           {/* Logo */}
           <div className="flex flex-col items-center mb-8">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center mb-4 shadow-lg shadow-blue-200">
+            <div className="w-16 h-16 rounded-2xl deep-glow-icon flex items-center justify-center mb-4">
               <Rocket className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-slate-800">创建个人知识库账号</h1>
-            <p className="text-sm text-slate-500 mt-1">开始管理你的知识资料</p>
+            <h1 className="text-2xl font-bold text-sky-50">创建个人知识库账号</h1>
+            <p className="text-sm text-blue-200/75 mt-1">开始管理你的知识资料</p>
           </div>
 
           {/* 表单 */}
@@ -68,7 +63,7 @@ export default function Register() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="用户名 (3-20 个字符)"
-                className="w-full px-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+                className="w-full px-4 py-3 deep-input rounded-xl transition-all"
               />
             </div>
             <div>
@@ -77,7 +72,7 @@ export default function Register() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="密码 (6-20 个字符)"
-                className="w-full px-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+                className="w-full px-4 py-3 deep-input rounded-xl transition-all"
               />
             </div>
             <div>
@@ -86,13 +81,13 @@ export default function Register() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="确认密码"
-                className="w-full px-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+                className="w-full px-4 py-3 deep-input rounded-xl transition-all"
               />
             </div>
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-gradient-to-r from-sky-400 to-blue-500 text-white font-medium rounded-xl hover:from-sky-500 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-blue-200"
+              className="w-full py-3 deep-btn-primary font-medium rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-300/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -107,9 +102,9 @@ export default function Register() {
           </form>
 
           {/* 登录链接 */}
-          <p className="mt-6 text-center text-sm text-slate-500">
+          <p className="mt-6 text-center text-sm text-blue-200/75">
             已有账号？
-            <Link to="/login" className="text-blue-500 hover:text-blue-600 ml-1 font-medium transition-colors">
+            <Link to="/login" className="text-cyan-300 hover:text-cyan-100 ml-1 font-medium transition-colors">
               立即登录
             </Link>
           </p>

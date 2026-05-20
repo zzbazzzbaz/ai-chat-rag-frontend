@@ -69,9 +69,9 @@ export default function ConversationManagement() {
       </div>
       
       {/* 主卡片 */}
-      <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg shadow-blue-100/30 overflow-hidden">
+      <div className="deep-panel rounded-2xl overflow-hidden">
         {/* 筛选栏 */}
-        <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/50">
+        <div className="px-6 py-4 border-b deep-panel-header">
           <div className="flex items-center gap-3 flex-wrap">
             <div className="relative">
               <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
@@ -79,30 +79,30 @@ export default function ConversationManagement() {
                 placeholder="用户名"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-36 pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all"
+                className="w-36 pl-10 pr-4 py-2.5 deep-input rounded-xl transition-all"
               />
             </div>
             <input
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-600 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all"
+              className="px-4 py-2.5 deep-input rounded-xl transition-all"
             />
             <span className="text-slate-400">至</span>
             <input
               type="date"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
-              className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-600 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all"
+              className="px-4 py-2.5 deep-input rounded-xl transition-all"
             />
             <button 
               onClick={handleSearch}
-              className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-sky-400 to-blue-500 text-white rounded-xl hover:from-sky-500 hover:to-blue-600 transition-all shadow-lg shadow-blue-200/50"
+              className="flex items-center gap-2 px-4 py-2.5 deep-btn-primary rounded-xl transition-all"
             >
               <Search className="h-4 w-4" />
               搜索
             </button>
-            <div className="ml-auto flex items-center gap-2 px-3 py-1.5 bg-violet-50 rounded-lg">
+            <div className="ml-auto flex items-center gap-2 px-3 py-1.5 bg-violet-500/15 border border-violet-300/20 rounded-lg">
               <MessageSquare className="h-4 w-4 text-violet-500" />
               <span className="text-sm text-violet-700 font-medium">共 {conversations?.total || 0} 对话</span>
             </div>
@@ -185,7 +185,7 @@ export default function ConversationManagement() {
               <button 
                 disabled={page <= 1} 
                 onClick={() => setPage(p => p - 1)}
-                className="p-2 rounded-lg border border-slate-200 hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="p-2 deep-btn-secondary rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 <ChevronLeft className="h-4 w-4 text-slate-600" />
               </button>
@@ -193,7 +193,7 @@ export default function ConversationManagement() {
               <button 
                 disabled={page >= totalPages} 
                 onClick={() => setPage(p => p + 1)}
-                className="p-2 rounded-lg border border-slate-200 hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="p-2 deep-btn-secondary rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 <ChevronRight className="h-4 w-4 text-slate-600" />
               </button>
@@ -205,8 +205,8 @@ export default function ConversationManagement() {
       {/* 对话详情弹窗 */}
       {detailModal.open && detailModal.detail && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl shadow-2xl w-[700px] max-h-[85vh] flex flex-col overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-slate-50 to-blue-50 flex-shrink-0">
+          <div className="deep-panel-strong rounded-2xl shadow-2xl w-[700px] max-h-[85vh] flex flex-col overflow-hidden">
+            <div className="px-6 py-4 border-b deep-panel-header flex items-center justify-between flex-shrink-0">
               <div>
                 <h3 className="font-semibold text-slate-800">{detailModal.detail.title}</h3>
                 <p className="text-xs text-slate-500 mt-1">
@@ -220,19 +220,19 @@ export default function ConversationManagement() {
                 <X className="h-4 w-4 text-slate-500" />
               </button>
             </div>
-            <div className="flex-1 overflow-auto p-6 space-y-4 bg-slate-50/50">
+            <div className="flex-1 overflow-auto p-6 space-y-4 bg-slate-950/20">
               {detailModal.detail.messages.map((msg) => (
                 <div key={msg.id} className={`flex gap-3 ${msg.role === 'user' ? 'justify-end' : ''}`}>
                   {msg.role === 'assistant' && (
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 rounded-lg deep-glow-icon flex items-center justify-center flex-shrink-0">
                       <Bot className="h-4 w-4 text-white" />
                     </div>
                   )}
                   <div className={`max-w-[80%] ${msg.role === 'user' ? 'order-first' : ''}`}>
                     <div className={`px-4 py-3 rounded-2xl ${
                       msg.role === 'user' 
-                        ? 'bg-gradient-to-r from-sky-400 to-blue-500 text-white rounded-tr-md' 
-                        : 'bg-white shadow-sm rounded-tl-md'
+                        ? 'deep-btn-primary text-white rounded-tr-md' 
+                        : 'deep-panel rounded-tl-md'
                     }`}>
                       <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
                     </div>
@@ -241,7 +241,7 @@ export default function ConversationManagement() {
                     </p>
                   </div>
                   {msg.role === 'user' && (
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-blue-700 flex items-center justify-center flex-shrink-0">
                       <User className="h-4 w-4 text-white" />
                     </div>
                   )}

@@ -4,25 +4,25 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
+    --background: 222 70% 7%;
+    --foreground: 213 60% 96%;
+    --card: 220 64% 13%;
+    --card-foreground: 213 60% 96%;
+    --popover: 220 64% 13%;
+    --popover-foreground: 213 60% 96%;
+    --primary: 205 96% 48%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217 55% 18%;
+    --secondary-foreground: 214 70% 93%;
+    --muted: 218 48% 16%;
+    --muted-foreground: 213 24% 70%;
+    --accent: 193 95% 42%;
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 214 52% 25%;
+    --input: 214 52% 25%;
+    --ring: 199 95% 57%;
     --radius: 0.5rem;
   }
 }
@@ -33,8 +33,274 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    min-height: 100vh;
+    background:
+      linear-gradient(115deg, rgba(14, 165, 233, 0.12) 0%, transparent 34%),
+      repeating-linear-gradient(90deg, rgba(125, 180, 255, 0.035) 0 1px, transparent 1px 72px),
+      repeating-linear-gradient(0deg, rgba(125, 180, 255, 0.026) 0 1px, transparent 1px 72px),
+      linear-gradient(135deg, #06142f 0%, #081d42 48%, #0c244d 100%);
+    color: #eaf3ff;
+    font-family: "Avenir Next", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    letter-spacing: 0;
   }
+}
+
+@layer components {
+  .deep-page {
+    min-height: 100%;
+    background:
+      linear-gradient(125deg, rgba(56, 189, 248, 0.12) 0%, transparent 38%),
+      repeating-linear-gradient(90deg, rgba(125, 180, 255, 0.03) 0 1px, transparent 1px 68px),
+      repeating-linear-gradient(0deg, rgba(125, 180, 255, 0.022) 0 1px, transparent 1px 68px),
+      linear-gradient(180deg, rgba(7, 21, 49, 0.96), rgba(5, 16, 37, 0.98));
+  }
+
+  .deep-panel {
+    background: linear-gradient(180deg, rgba(13, 35, 76, 0.86), rgba(9, 26, 59, 0.92));
+    border: 1px solid rgba(125, 180, 255, 0.18);
+    box-shadow: 0 20px 60px rgba(2, 8, 23, 0.34);
+    backdrop-filter: blur(18px);
+  }
+
+  .deep-panel-strong {
+    background: linear-gradient(180deg, rgba(15, 42, 91, 0.96), rgba(8, 25, 57, 0.98));
+    border: 1px solid rgba(125, 180, 255, 0.22);
+    box-shadow: 0 24px 70px rgba(2, 8, 23, 0.42);
+  }
+
+  .deep-panel-header {
+    background: linear-gradient(90deg, rgba(21, 57, 116, 0.92), rgba(10, 35, 78, 0.7));
+    border-color: rgba(125, 180, 255, 0.16);
+  }
+
+  .deep-title {
+    color: #f3f8ff;
+    letter-spacing: 0;
+  }
+
+  .deep-muted {
+    color: #9db5d8;
+  }
+
+  .deep-input {
+    background: rgba(5, 18, 44, 0.82);
+    border: 1px solid rgba(125, 180, 255, 0.22);
+    color: #edf6ff;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .deep-input::placeholder {
+    color: rgba(174, 195, 224, 0.62);
+  }
+
+  .deep-input:focus {
+    border-color: rgba(56, 189, 248, 0.72);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.16);
+    outline: none;
+  }
+
+  .deep-btn-primary {
+    background: linear-gradient(135deg, #0ea5e9, #1d4ed8 58%, #163a8a);
+    color: #ffffff;
+    box-shadow: 0 12px 32px rgba(14, 165, 233, 0.28);
+  }
+
+  .deep-btn-primary:hover {
+    filter: brightness(1.08);
+    box-shadow: 0 16px 38px rgba(14, 165, 233, 0.34);
+  }
+
+  .deep-btn-secondary {
+    background: rgba(15, 39, 84, 0.88);
+    border: 1px solid rgba(125, 180, 255, 0.2);
+    color: #dcecff;
+  }
+
+  .deep-btn-secondary:hover {
+    background: rgba(24, 63, 128, 0.92);
+    color: #ffffff;
+  }
+
+  .deep-chip {
+    background: rgba(14, 165, 233, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.28);
+    color: #bfe8ff;
+  }
+
+  .deep-chip:hover {
+    background: rgba(14, 165, 233, 0.2);
+    border-color: rgba(56, 189, 248, 0.46);
+    color: #ffffff;
+  }
+
+  .deep-table-row {
+    border-color: rgba(125, 180, 255, 0.12);
+  }
+
+  .deep-table-row:hover {
+    background: rgba(14, 165, 233, 0.08);
+  }
+
+  .deep-glow-icon {
+    background: linear-gradient(135deg, #38bdf8, #1d4ed8);
+    box-shadow: 0 12px 28px rgba(14, 165, 233, 0.28);
+  }
+}
+
+.admin-shell,
+.user-shell,
+.auth-shell {
+  color: #eaf3ff;
+}
+
+.admin-shell [class~="bg-white/70"],
+.admin-shell [class~="bg-white"],
+.admin-shell [class~="bg-background"],
+.user-shell [class~="bg-white/70"],
+.user-shell [class~="bg-white"],
+.user-shell [class~="bg-background"] {
+  background: linear-gradient(180deg, rgba(13, 35, 76, 0.9), rgba(8, 25, 57, 0.96)) !important;
+}
+
+.admin-shell [class~="bg-slate-50"],
+.admin-shell [class~="bg-slate-50/50"],
+.admin-shell [class~="bg-slate-50/30"],
+.admin-shell [class~="bg-blue-50"],
+.admin-shell [class~="bg-blue-50/50"],
+.admin-shell [class~="bg-blue-50/30"],
+.admin-shell [class~="from-slate-50"],
+.admin-shell [class~="to-blue-50"],
+.admin-shell [class~="to-blue-50/50"],
+.admin-shell [class~="to-sky-50"],
+.user-shell [class~="bg-gray-50"],
+.user-shell [class~="bg-slate-50"],
+.user-shell [class~="bg-slate-50/50"],
+.user-shell [class~="bg-blue-50"],
+.user-shell [class~="bg-blue-50/30"],
+.user-shell [class~="from-slate-50"],
+.user-shell [class~="to-blue-50/30"] {
+  background: rgba(7, 22, 52, 0.72) !important;
+}
+
+.admin-shell [class~="bg-slate-100"],
+.user-shell [class~="bg-gray-100"],
+.user-shell [class~="bg-slate-100"] {
+  background: rgba(56, 189, 248, 0.1) !important;
+}
+
+.admin-shell [class~="bg-emerald-50"],
+.user-shell [class~="bg-emerald-50"] {
+  background: rgba(16, 185, 129, 0.14) !important;
+}
+
+.admin-shell [class~="bg-amber-50"],
+.admin-shell [class~="bg-orange-50"],
+.user-shell [class~="bg-amber-50"],
+.user-shell [class~="bg-orange-50"] {
+  background: rgba(245, 158, 11, 0.14) !important;
+}
+
+.admin-shell [class~="bg-red-50"],
+.user-shell [class~="bg-red-50"] {
+  background: rgba(239, 68, 68, 0.14) !important;
+}
+
+.admin-shell [class~="bg-violet-50"],
+.admin-shell [class~="bg-purple-50"] {
+  background: rgba(99, 102, 241, 0.16) !important;
+}
+
+.admin-shell [class~="text-slate-800"],
+.admin-shell [class~="text-slate-700"],
+.admin-shell [class~="text-gray-800"],
+.user-shell [class~="text-slate-800"],
+.user-shell [class~="text-gray-800"],
+.auth-shell [class~="text-slate-800"] {
+  color: #f3f8ff !important;
+}
+
+.admin-shell [class~="text-slate-600"],
+.admin-shell [class~="text-gray-700"],
+.user-shell [class~="text-slate-600"],
+.user-shell [class~="text-gray-700"],
+.user-shell [class~="text-gray-600"],
+.auth-shell [class~="text-slate-600"] {
+  color: #d6e5fb !important;
+}
+
+.admin-shell [class~="text-slate-500"],
+.admin-shell [class~="text-gray-500"],
+.user-shell [class~="text-slate-500"],
+.user-shell [class~="text-gray-500"],
+.user-shell [class~="text-gray-400"],
+.auth-shell [class~="text-slate-500"] {
+  color: #9db5d8 !important;
+}
+
+.admin-shell [class~="text-slate-400"],
+.user-shell [class~="text-slate-400"],
+.auth-shell [class~="text-slate-400"] {
+  color: #7894bd !important;
+}
+
+.admin-shell [class*="border-slate"],
+.admin-shell [class*="border-white"],
+.admin-shell [class*="border-gray"],
+.user-shell [class*="border-slate"],
+.user-shell [class*="border-white"],
+.user-shell [class*="border-gray"],
+.auth-shell [class*="border-slate"],
+.auth-shell [class*="border-white"] {
+  border-color: rgba(125, 180, 255, 0.18) !important;
+}
+
+.admin-shell input,
+.admin-shell select,
+.admin-shell textarea,
+.user-shell input,
+.user-shell select,
+.user-shell textarea,
+.auth-shell input,
+.auth-shell select,
+.auth-shell textarea {
+  background: rgba(5, 18, 44, 0.82) !important;
+  border-color: rgba(125, 180, 255, 0.22) !important;
+  color: #edf6ff !important;
+  color-scheme: dark;
+}
+
+.admin-shell input::placeholder,
+.admin-shell textarea::placeholder,
+.user-shell input::placeholder,
+.user-shell textarea::placeholder,
+.auth-shell input::placeholder,
+.auth-shell textarea::placeholder {
+  color: rgba(174, 195, 224, 0.62) !important;
+}
+
+.admin-shell table thead tr,
+.admin-shell table tbody tr,
+.admin-shell [class~="divide-slate-100"] > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(125, 180, 255, 0.12) !important;
+}
+
+.admin-shell table tbody tr:hover {
+  background: rgba(14, 165, 233, 0.08) !important;
+}
+
+.admin-shell [class~="shadow-blue-100/30"],
+.admin-shell [class~="shadow-blue-100/20"],
+.admin-shell [class~="shadow-blue-200/50"],
+.admin-shell [class~="shadow-lg"],
+.user-shell [class~="shadow-blue-100/30"],
+.user-shell [class~="shadow-blue-100/50"],
+.user-shell [class~="shadow-blue-200"],
+.user-shell [class~="shadow-lg"],
+.auth-shell [class~="shadow-blue-100/50"],
+.auth-shell [class~="shadow-blue-200"],
+.auth-shell [class~="shadow-lg"],
+.auth-shell [class~="shadow-xl"] {
+  box-shadow: 0 20px 60px rgba(2, 8, 23, 0.34) !important;
 }
 
 /* 自定义滚动条 */
@@ -48,17 +314,19 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d1d5db;
+  background: rgba(96, 165, 250, 0.42);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
+  background: rgba(125, 211, 252, 0.72);
 }
 
 /* Markdown 代码块样式 */
 .prose pre {
-  @apply bg-gray-100 rounded-lg overflow-x-auto;
+  @apply rounded-lg overflow-x-auto;
+  background: #07162f !important;
+  border: 1px solid rgba(125, 180, 255, 0.16);
 }
 
 .prose pre code {
@@ -66,7 +334,9 @@
 }
 
 .prose code {
-  @apply bg-gray-100 px-1.5 py-0.5 rounded text-sm text-gray-800;
+  @apply px-1.5 py-0.5 rounded text-sm;
+  background: rgba(56, 189, 248, 0.12);
+  color: #dbeafe;
 }
 
 .prose code::before,
@@ -76,10 +346,10 @@
 
 /* highlight.js 浅色主题 */
 .hljs {
-  background: #f3f4f6 !important;
+  background: #07162f !important;
   padding: 1rem !important;
   border-radius: 0.5rem;
-  color: #374151 !important;
+  color: #dbeafe !important;
 }
 
 .hljs-keyword,
@@ -137,10 +407,10 @@
 }
 
 .hljs-subst {
-  color: #374151;
+  color: #dbeafe;
 }
 
-/* 航天风格动画 */
+/* 深蓝主题背景微光 */
 @keyframes twinkle {
   0%, 100% {
     opacity: 0.3;

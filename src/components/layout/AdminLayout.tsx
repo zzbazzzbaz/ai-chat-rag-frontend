@@ -30,21 +30,21 @@ export default function AdminLayout() {
   }
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30">
+    <div className="admin-shell flex h-screen deep-page">
       {/* 侧边栏 */}
-      <aside className="w-64 bg-white/70 backdrop-blur-xl border-r border-white/80 flex flex-col shadow-lg shadow-blue-100/20">
-        <div className="p-5 border-b border-slate-100">
+      <aside className="w-64 deep-panel-strong border-r border-sky-300/15 flex flex-col">
+        <div className="p-5 border-b border-sky-300/15">
           <div className="flex items-center gap-3">
             {appInfo.logo_url ? (
               <img src={appInfo.logo_url} alt="Logo" className="w-10 h-10 rounded-xl object-contain" />
             ) : (
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center shadow-lg shadow-blue-200">
+              <div className="w-10 h-10 rounded-xl deep-glow-icon flex items-center justify-center">
                 <Rocket className="h-5 w-5 text-white" />
               </div>
             )}
             <div>
-              <h1 className="font-bold text-slate-800">管理后台</h1>
-              <p className="text-xs text-slate-500">{appInfo.app_name}</p>
+              <h1 className="font-bold text-sky-50">管理后台</h1>
+              <p className="text-xs text-blue-200/75">{appInfo.app_name}</p>
             </div>
           </div>
         </div>
@@ -57,8 +57,8 @@ export default function AdminLayout() {
               className={cn(
                 'flex items-center gap-3 px-4 py-3 rounded-xl transition-all',
                 isActive(item)
-                  ? 'bg-gradient-to-r from-sky-400 to-blue-500 text-white shadow-lg shadow-blue-200/50'
-                  : 'text-slate-600 hover:bg-blue-50 hover:text-blue-600'
+                  ? 'deep-btn-primary text-white'
+                  : 'text-blue-100 hover:bg-sky-400/10 hover:text-white'
               )}
             >
               <item.icon className="h-5 w-5" />
@@ -67,10 +67,10 @@ export default function AdminLayout() {
           ))}
         </nav>
 
-        <div className="p-4 border-t border-slate-100">
+        <div className="p-4 border-t border-sky-300/15">
           <button
             onClick={() => navigate('/')}
-            className="flex items-center gap-2 w-full px-4 py-3 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
+            className="flex items-center gap-2 w-full px-4 py-3 text-blue-200 hover:text-white hover:bg-sky-400/10 rounded-xl transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             <span className="text-sm font-medium">返回用户端</span>

@@ -138,9 +138,9 @@ export default function KnowledgeManagement() {
       </div>
       
       {/* 主卡片 */}
-      <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg shadow-blue-100/30 overflow-hidden">
+      <div className="deep-panel rounded-2xl overflow-hidden">
         {/* 工具栏 */}
-        <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/50">
+        <div className="px-6 py-4 border-b deep-panel-header">
           <div className="flex items-center gap-4 flex-wrap">
             <div className="flex gap-2">
               <div className="relative">
@@ -150,13 +150,13 @@ export default function KnowledgeManagement() {
                   value={keyword}
                   onChange={(e) => setKeyword(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                  className="w-48 pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all"
+                  className="w-48 pl-10 pr-4 py-2.5 deep-input rounded-xl transition-all"
                 />
               </div>
               <select
                 value={statusFilter}
                 onChange={(e) => { setStatusFilter(e.target.value); setPage(1) }}
-                className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-600 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all"
+                className="px-4 py-2.5 deep-input rounded-xl transition-all"
               >
                 <option value="">全部状态</option>
                 <option value="processing">处理中</option>
@@ -165,13 +165,13 @@ export default function KnowledgeManagement() {
               </select>
               <button 
                 onClick={handleSearch} 
-                className="px-4 py-2.5 bg-gradient-to-r from-sky-400 to-blue-500 text-white rounded-xl hover:from-sky-500 hover:to-blue-600 transition-all shadow-lg shadow-blue-200/50"
+                className="px-4 py-2.5 deep-btn-primary rounded-xl transition-all"
               >
                 搜索
               </button>
             </div>
             <div className="ml-auto flex items-center gap-3">
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 rounded-lg">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/15 border border-emerald-300/20 rounded-lg">
                 <Database className="h-4 w-4 text-emerald-500" />
                 <span className="text-sm text-emerald-700 font-medium">共 {files?.total || 0} 文件</span>
               </div>
@@ -185,7 +185,7 @@ export default function KnowledgeManagement() {
               <button 
                 onClick={() => fileInputRef.current?.click()} 
                 disabled={uploading}
-                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-400 to-teal-500 text-white rounded-xl hover:from-emerald-500 hover:to-teal-600 transition-all shadow-lg shadow-teal-200/50 disabled:opacity-50"
+                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-400 to-teal-600 text-white rounded-xl hover:brightness-110 transition-all shadow-lg shadow-emerald-950/30 disabled:opacity-50"
               >
                 {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
                 {uploading ? '上传中...' : '上传文件'}
@@ -277,7 +277,7 @@ export default function KnowledgeManagement() {
               <button 
                 disabled={page <= 1} 
                 onClick={() => setPage(p => p - 1)}
-                className="p-2 rounded-lg border border-slate-200 hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="p-2 deep-btn-secondary rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 <ChevronLeft className="h-4 w-4 text-slate-600" />
               </button>
@@ -285,7 +285,7 @@ export default function KnowledgeManagement() {
               <button 
                 disabled={page >= totalPages} 
                 onClick={() => setPage(p => p + 1)}
-                className="p-2 rounded-lg border border-slate-200 hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="p-2 deep-btn-secondary rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 <ChevronRight className="h-4 w-4 text-slate-600" />
               </button>
@@ -297,8 +297,8 @@ export default function KnowledgeManagement() {
       {/* 详情弹窗 */}
       {detailModal.open && detailModal.file && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl shadow-2xl w-[500px] max-h-[80vh] overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-slate-50 to-blue-50">
+          <div className="deep-panel-strong rounded-2xl shadow-2xl w-[500px] max-h-[80vh] overflow-hidden">
+            <div className="px-6 py-4 border-b deep-panel-header flex items-center justify-between">
               <h3 className="font-semibold text-slate-800">文件详情</h3>
               <button 
                 onClick={() => setDetailModal({ open: false, file: null })}
@@ -353,17 +353,17 @@ export default function KnowledgeManagement() {
                 </div>
               )}
             </div>
-            <div className="px-6 py-4 border-t border-slate-100 bg-slate-50/50 flex gap-3">
+            <div className="px-6 py-4 border-t border-sky-300/15 bg-slate-950/20 flex gap-3">
               <button 
                 onClick={() => adminKnowledgeApi.download(detailModal.file!.id, detailModal.file!.original_filename || detailModal.file!.filename)}
-                className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-gradient-to-r from-sky-400 to-blue-500 text-white rounded-xl hover:from-sky-500 hover:to-blue-600 transition-all shadow-lg shadow-blue-200/50"
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 deep-btn-primary rounded-xl transition-all"
               >
                 <Download className="h-4 w-4" />
                 下载文件
               </button>
               <button 
                 onClick={() => setDetailModal({ open: false, file: null })}
-                className="flex-1 py-2.5 border border-slate-200 text-slate-600 rounded-xl hover:bg-white transition-colors"
+                className="flex-1 py-2.5 deep-btn-secondary rounded-xl transition-colors"
               >
                 关闭
               </button>

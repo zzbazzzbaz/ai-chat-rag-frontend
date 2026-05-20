@@ -34,7 +34,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="min-h-full bg-gradient-to-b from-slate-50 to-blue-50/30 p-6">
+    <div className="min-h-full deep-page p-6">
       <div className="max-w-4xl mx-auto">
         {/* 头部 */}
         <div className="mb-8">
@@ -43,13 +43,13 @@ export default function Profile() {
         </div>
         
         {/* 用户卡片 */}
-        <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg shadow-blue-100/30 p-6 mb-6">
+        <div className="deep-panel rounded-2xl p-6 mb-6">
           <div className="flex items-center gap-4">
             <div className="relative group">
               {user?.avatar_url ? (
-                <img src={user.avatar_url} alt="头像" className="w-16 h-16 rounded-2xl object-cover shadow-lg shadow-blue-200" />
+                <img src={user.avatar_url} alt="头像" className="w-16 h-16 rounded-2xl object-cover shadow-lg shadow-slate-950/30" />
               ) : (
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center shadow-lg shadow-blue-200">
+                <div className="w-16 h-16 rounded-2xl deep-glow-icon flex items-center justify-center">
                   <span className="text-2xl font-bold text-white">
                     {user?.username?.charAt(0).toUpperCase() || 'U'}
                   </span>
@@ -91,10 +91,10 @@ export default function Profile() {
 
         <div className="grid gap-6 md:grid-cols-2">
           {/* 用户信息 */}
-          <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg shadow-blue-100/30 overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/50">
+          <div className="deep-panel rounded-2xl overflow-hidden">
+            <div className="px-6 py-4 border-b deep-panel-header">
               <h3 className="font-semibold text-slate-800 flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg deep-glow-icon flex items-center justify-center">
                   <User className="h-4 w-4 text-white" />
                 </div>
                 账户信息
@@ -122,8 +122,8 @@ export default function Profile() {
           </div>
 
           {/* 使用统计 */}
-          <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg shadow-blue-100/30 overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/50">
+          <div className="deep-panel rounded-2xl overflow-hidden">
+            <div className="px-6 py-4 border-b deep-panel-header">
               <h3 className="font-semibold text-slate-800 flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center">
                   <Rocket className="h-4 w-4 text-white" />
@@ -137,7 +137,7 @@ export default function Profile() {
                   <MessageSquare className="h-4 w-4" />
                   对话数
                 </span>
-                <span className="font-bold text-2xl bg-gradient-to-r from-sky-500 to-blue-500 bg-clip-text text-transparent">
+                <span className="font-bold text-2xl bg-gradient-to-r from-cyan-300 to-blue-200 bg-clip-text text-transparent">
                   {stats?.conversation_count ?? '-'}
                 </span>
               </div>
@@ -146,7 +146,7 @@ export default function Profile() {
                   <FileText className="h-4 w-4" />
                   消息数
                 </span>
-                <span className="font-bold text-2xl bg-gradient-to-r from-sky-500 to-blue-500 bg-clip-text text-transparent">
+                <span className="font-bold text-2xl bg-gradient-to-r from-cyan-300 to-blue-200 bg-clip-text text-transparent">
                   {stats?.message_count ?? '-'}
                 </span>
               </div>

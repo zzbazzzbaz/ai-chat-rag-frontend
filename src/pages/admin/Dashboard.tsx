@@ -26,32 +26,24 @@ export default function Dashboard() {
       value: stats?.user_count, 
       icon: Users,
       gradient: 'from-sky-400 to-blue-500',
-      bgGradient: 'from-sky-50 to-blue-50',
-      shadowColor: 'shadow-blue-200/50'
     },
     { 
       title: '对话总数', 
       value: stats?.conversation_count, 
       icon: MessageSquare,
       gradient: 'from-violet-400 to-purple-500',
-      bgGradient: 'from-violet-50 to-purple-50',
-      shadowColor: 'shadow-purple-200/50'
     },
     { 
       title: '知识库文件', 
       value: stats?.knowledge_count, 
       icon: Database,
       gradient: 'from-emerald-400 to-teal-500',
-      bgGradient: 'from-emerald-50 to-teal-50',
-      shadowColor: 'shadow-teal-200/50'
     },
     { 
       title: '消息总数', 
       value: stats?.message_count, 
       icon: FileText,
       gradient: 'from-amber-400 to-orange-500',
-      bgGradient: 'from-amber-50 to-orange-50',
-      shadowColor: 'shadow-orange-200/50'
     },
   ]
 
@@ -74,7 +66,7 @@ export default function Dashboard() {
         {statCards.map((card) => (
           <div 
             key={card.title}
-            className={`bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg ${card.shadowColor} p-6 hover:shadow-xl transition-shadow`}
+            className="deep-panel rounded-2xl p-6 hover:border-sky-300/30 transition-colors"
           >
             <div className="flex items-center justify-between mb-4">
               <span className="text-sm font-medium text-slate-500">{card.title}</span>
@@ -96,24 +88,24 @@ export default function Dashboard() {
       </div>
 
       {/* 快捷操作 */}
-      <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-lg shadow-blue-100/30 p-6">
-        <h2 className="text-lg font-semibold text-slate-800 mb-4">快捷操作</h2>
+      <div className="deep-panel rounded-2xl p-6">
+        <h2 className="text-lg font-semibold text-sky-50 mb-4">快捷操作</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <a href="/admin/users" className="flex flex-col items-center gap-2 p-4 rounded-xl bg-gradient-to-br from-slate-50 to-blue-50 hover:from-blue-50 hover:to-sky-50 border border-slate-100 transition-colors">
-            <Users className="h-6 w-6 text-blue-500" />
-            <span className="text-sm text-slate-600">用户管理</span>
+          <a href="/admin/users" className="flex flex-col items-center gap-2 p-4 rounded-xl deep-btn-secondary transition-colors">
+            <Users className="h-6 w-6 text-cyan-300" />
+            <span className="text-sm text-blue-100">用户管理</span>
           </a>
-          <a href="/admin/knowledge" className="flex flex-col items-center gap-2 p-4 rounded-xl bg-gradient-to-br from-slate-50 to-blue-50 hover:from-blue-50 hover:to-sky-50 border border-slate-100 transition-colors">
+          <a href="/admin/knowledge" className="flex flex-col items-center gap-2 p-4 rounded-xl deep-btn-secondary transition-colors">
             <Database className="h-6 w-6 text-emerald-500" />
-            <span className="text-sm text-slate-600">知识库管理</span>
+            <span className="text-sm text-blue-100">知识库管理</span>
           </a>
-          <a href="/admin/conversations" className="flex flex-col items-center gap-2 p-4 rounded-xl bg-gradient-to-br from-slate-50 to-blue-50 hover:from-blue-50 hover:to-sky-50 border border-slate-100 transition-colors">
-            <MessageSquare className="h-6 w-6 text-purple-500" />
-            <span className="text-sm text-slate-600">对话管理</span>
+          <a href="/admin/conversations" className="flex flex-col items-center gap-2 p-4 rounded-xl deep-btn-secondary transition-colors">
+            <MessageSquare className="h-6 w-6 text-violet-300" />
+            <span className="text-sm text-blue-100">对话管理</span>
           </a>
-          <a href="/admin/settings" className="flex flex-col items-center gap-2 p-4 rounded-xl bg-gradient-to-br from-slate-50 to-blue-50 hover:from-blue-50 hover:to-sky-50 border border-slate-100 transition-colors">
+          <a href="/admin/settings" className="flex flex-col items-center gap-2 p-4 rounded-xl deep-btn-secondary transition-colors">
             <FileText className="h-6 w-6 text-amber-500" />
-            <span className="text-sm text-slate-600">系统设置</span>
+            <span className="text-sm text-blue-100">系统设置</span>
           </a>
         </div>
       </div>
