@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { adminKnowledgeApi } from '@/api'
 import type { KnowledgeFile, PaginatedResponse } from '@/types'
-import { Search, Upload, Trash2, RefreshCw, Eye, ChevronLeft, ChevronRight, Database, X, FileText, Loader2, Download } from 'lucide-react'
+import { Search, Upload, Trash2, RefreshCw, Eye, ChevronLeft, ChevronRight, Database, X, FileText, Loader2, Download, Image } from 'lucide-react'
 
 const statusMap: Record<string, { label: string; className: string }> = {
   processing: { label: '处理中', className: 'bg-amber-50 text-amber-700 border-amber-200' },
@@ -13,6 +13,12 @@ const formatFileSize = (bytes: number) => {
   if (bytes < 1024) return bytes + ' B'
   if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB'
   return (bytes / (1024 * 1024)).toFixed(1) + ' MB'
+}
+
+const getFileIcon = (fileType: KnowledgeFile['file_type']) => {
+  return fileType === 'png'
+    ? <Image className="h-4 w-4 text-teal-500 flex-shrink-0" />
+    : <FileText className="h-4 w-4 text-blue-500 flex-shrink-0" />
 }
 
 export default function KnowledgeManagement() {
@@ -71,13 +77,19 @@ export default function KnowledgeManagement() {
       'application/pdf', 
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       'text/plain',
-      'text/markdown'
+      'text/markdown',
+      'image/png'
     ]
-    const allowedExts = ['.pdf', '.docx', '.txt', '.md']
+    const allowedExts = ['.pdf', '.docx', '.txt', '.md', '.png']
     const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase()
     
     if (!allowedTypes.includes(file.type) && !allowedExts.includes(ext)) {
-      alert('仅支持 PDF、Word、TXT、Markdown 文档')
+      alert('仅支持 PDF、Word、TXT、Markdown 文档和 PNG 图片')
+      return
+    }
+
+    if (ext === '.png' && file.size > 7 * 1024 * 1024) {
+      alert('PNG 图片大小不能超过 7MB')
       return
     }
     
@@ -134,7 +146,7 @@ export default function KnowledgeManagement() {
       {/* 头部 */}
       <div>
         <h1 className="text-2xl font-bold text-slate-800">知识库管理</h1>
-        <p className="text-slate-500 mt-1">管理知识库文档，支持 PDF、Word、TXT、Markdown</p>
+        <p className="text-slate-500 mt-1">管理知识库文档，支持 PDF、Word、TXT、Markdown、PNG 图片 OCR</p>
       </div>
       
       {/* 主卡片 */}
@@ -178,7 +190,7 @@ export default function KnowledgeManagement() {
               <input
                 ref={fileInputRef}
                 type="file"
-                accept=".pdf,.docx,.txt,.md"
+                accept=".pdf,.docx,.txt,.md,.png,image/png"
                 onChange={handleUpload}
                 className="hidden"
               />
@@ -220,7 +232,7 @@ export default function KnowledgeManagement() {
                     <td className="py-4 px-6 text-slate-600">{file.id}</td>
                     <td className="py-4 px-6">
                       <div className="flex items-center gap-2 max-w-xs">
-                        <FileText className="h-4 w-4 text-blue-500 flex-shrink-0" />
+                        {getFileIcon(file.file_type)}
                         <span className="font-medium text-slate-800 truncate" title={file.filename}>{file.filename}</span>
                       </div>
                     </td>

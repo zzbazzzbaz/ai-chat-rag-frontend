@@ -58,7 +58,7 @@ export interface KnowledgeFile {
   filename: string
   original_filename?: string
   file_size: number
-  file_type: 'pdf' | 'docx' | 'txt' | 'md'
+  file_type: 'pdf' | 'docx' | 'txt' | 'md' | 'png'
   status: 'processing' | 'completed' | 'failed'
   error_message?: string | null
   created_at: string
